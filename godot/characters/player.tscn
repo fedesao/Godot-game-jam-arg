@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsw4i7jsr1ank"]
+
+[ext_resource type="Script" uid="uid://cio4jt3snka3a" path="res://characters/player.gd" id="1_dnjla"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6p3mc"]
+radius = 28.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_dnjla")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6p3mc")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -27.0
+offset_top = -23.0
+offset_right = 27.0
+offset_bottom = 25.0
+color = Color(0.979542, 0.371125, 0.112457, 1)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -24.0
+offset_top = -12.0
+offset_right = 25.0
+offset_bottom = 11.0
+text = "player"
