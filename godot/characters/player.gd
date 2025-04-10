@@ -22,5 +22,5 @@ func _physics_process(_delta):
 func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var direction = (get_global_mouse_position() - global_position).normalized()
-		weapon.shoot_proyectile_1(posicion_pistola.global_position, direction, get_parent())
+		weapon.shoot_escopeta(posicion_pistola.global_position, direction, get_parent())
 		

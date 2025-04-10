@@ -1,6 +1,6 @@
-extends Node2D
-@export var speed = Global.balaSpeed1
-@export var dmg = Global.balaDmg1
+extends Area2D
+@export var speed = Global.escopetaSpeed
+@export var dmgDone = Global.escopetaDmg
 var direction: Vector2 = Vector2.ZERO
 
 func set_direction(dir: Vector2):
@@ -15,5 +15,5 @@ func _on_body_entered(body: Node2D) -> void:
 		print("enemigo hit")
 		queue_free()
 		if body.has_method("take_damage"):
-			body.take_damage(dmg)#daño del arma
+			body.take_damage(dmgDone)#daño del arma
 		

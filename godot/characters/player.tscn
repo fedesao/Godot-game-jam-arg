@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dsw4i7jsr1ank"]
+[gd_scene load_steps=6 format=3 uid="uid://dsw4i7jsr1ank"]
 
 [ext_resource type="Script" uid="uid://cio4jt3snka3a" path="res://characters/player.gd" id="1_dnjla"]
 [ext_resource type="PackedScene" uid="uid://cinqt7u3thb8x" path="res://characters/arma_1/proyectil_1.tscn" id="2_3eadt"]
-[ext_resource type="Script" uid="uid://x117siqlqcjd" path="res://characters/disparo.gd" id="2_tory2"]
+[ext_resource type="Script" uid="uid://x117siqlqcjd" path="res://characters/tipos_de_disparo.gd" id="2_tory2"]
+[ext_resource type="PackedScene" uid="uid://ijnuhkyu1p5v" path="res://characters/arma_2/escopeta.tscn" id="4_x0jl3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6p3mc"]
 radius = 28.0
@@ -50,3 +51,8 @@ position = Vector2(48, -12)
 [node name="weapon" type="Node2D" parent="."]
 script = ExtResource("2_tory2")
 projectile_scene_1 = ExtResource("2_3eadt")
+projectile_scene_2 = ExtResource("4_x0jl3")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
