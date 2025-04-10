@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cinqt7u3thb8x"]
+
+[ext_resource type="Script" uid="uid://dkrus3gki86ur" path="res://characters/arma_1/proyectil_1.gd" id="1_kplrb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kplrb"]
+radius = 6.0
+
+[node name="Proyectil1" type="Area2D"]
+script = ExtResource("1_kplrb")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -8.0
+offset_top = -6.0
+offset_right = 11.0
+offset_bottom = 7.0
+color = Color(0.891603, 0.152613, 0.346556, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kplrb")
