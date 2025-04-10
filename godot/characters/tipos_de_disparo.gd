@@ -5,7 +5,7 @@ extends Node
 @export var num_pellets: int = 4
 @export var spread_angle_degrees: float = 25.0
 
-func shoot_proyectile_1(origin: Vector2, direction: Vector2, parent: Node):
+func shoot_pistola(origin: Vector2, direction: Vector2, parent: Node):
 	if projectile_scene_1 == null:
 		return
 	var projectile = projectile_scene_1.instantiate()
