@@ -10,3 +10,7 @@ func _physics_process(_delta):
 	input_vector = input_vector.normalized()
 	velocity = input_vector * speed
 	move_and_slide()
+   # para que rote hacia el mouse
+	var mouse_pos = get_global_mouse_position()
+	var direction = (mouse_pos - global_position).normalized()
+	rotation = direction.angle()
