@@ -1,15 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsw4i7jsr1ank"]
+[gd_scene load_steps=5 format=3 uid="uid://dsw4i7jsr1ank"]
 
 [ext_resource type="Script" uid="uid://cio4jt3snka3a" path="res://characters/player.gd" id="1_dnjla"]
 [ext_resource type="PackedScene" uid="uid://cinqt7u3thb8x" path="res://characters/arma_1/proyectil_1.tscn" id="2_3eadt"]
+[ext_resource type="Script" uid="uid://x117siqlqcjd" path="res://characters/disparo.gd" id="2_tory2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6p3mc"]
 radius = 28.0
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 27
 motion_mode = 1
 script = ExtResource("1_dnjla")
-projectile_scene_1 = ExtResource("2_3eadt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_6p3mc")
@@ -45,3 +46,7 @@ color = Color(0.214703, 0.214703, 0.214703, 1)
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(48, -12)
+
+[node name="weapon" type="Node2D" parent="."]
+script = ExtResource("2_tory2")
+projectile_scene_1 = ExtResource("2_3eadt")

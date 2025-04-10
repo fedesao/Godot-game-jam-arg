@@ -1,9 +1,10 @@
 extends CharacterBody2D
 @export var speed = Global.playerSpeed
 @export var life = Global.playerLife
-@onready var pistola = $Marker2D
+@onready var posicion_pistola = $Marker2D
+@onready var weapon = $weapon
 #escena proyectil 1
-@export var projectile_scene_1: PackedScene
+
 
 func _physics_process(_delta):
 	var input_vector = Vector2.ZERO
@@ -20,14 +21,6 @@ func _physics_process(_delta):
 	
 func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		shoot_proyectile_1()
+		var direction = (get_global_mouse_position() - global_position).normalized()
+		weapon.shoot_proyectile_1(posicion_pistola.global_position, direction, get_parent())
 		
-func shoot_proyectile_1():
-	if projectile_scene_1 == null:
-		return
-	var projectile = projectile_scene_1.instantiate()
-	get_parent().add_child(projectile)  
-	projectile.global_position = pistola.global_position     # Posicionar el proyectil en el personaje
-	# Calcular dirección hacia el mouse
-	var dir = (get_global_mouse_position() - global_position).normalized()
-	projectile.set_direction(dir)

@@ -6,6 +6,8 @@
 radius = 6.0
 
 [node name="Proyectil1" type="Area2D"]
+collision_layer = 4
+collision_mask = 10
 script = ExtResource("1_kplrb")
 
 [node name="ColorRect" type="ColorRect" parent="."]

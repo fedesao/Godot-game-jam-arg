@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 UserSettings="*res://settings/user_settings.gd"
 Global="*res://CodigoGlobal/Global.gd"
+Armas="*res://CodigoGlobal/armas.gd"
 
 [display]
 
@@ -100,6 +101,18 @@ pause={
 [internationalization]
 
 locale/translations=PackedStringArray("res://i18n/translation.de.translation", "res://i18n/translation.en.translation")
+
+[layer_names]
+
+2d_render/layer_1="jugador"
+2d_render/layer_2="enemigos"
+2d_render/layer_3="proyectiles"
+2d_render/layer_4="paredes"
+2d_physics/layer_1="jugador"
+2d_physics/layer_2="enemigos"
+2d_physics/layer_3="proyectiles"
+2d_physics/layer_4="paredes"
+2d_physics/layer_5="pick ups"
 
 [rendering]
 
