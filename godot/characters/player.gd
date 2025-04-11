@@ -9,7 +9,7 @@ var current_weapon: Node = null
 var weapon_list: Array = []
 var current_weapon_index = 0
 #RELOAD
-
+@onready var shootTimer = $ShootTimer
 
 ####ESCOPETA
 @export var max_escopeta_ammo:int = 2
@@ -40,18 +40,19 @@ func _physics_process(_delta):
 	velocity = input_vector * speed
 	move_and_slide()
    # para que rote hacia el mouse
-	var mouse_pos = get_global_mouse_position()
-	var direction = (mouse_pos - global_position).normalized()
-	rotation = direction.angle()
+	look_at(get_global_mouse_position())
 	#SELECCION DE ARMAS##
 	if Input.is_action_just_pressed("arma1"):
 		select_weapon(0)
 		print("arma 1 revolver")
+		shootTimer.stop()
 	elif Input.is_action_just_pressed("arma2"):
 		select_weapon(1)
+		shootTimer.stop()
 		print("arma 2 escopeta")
 	elif Input.is_action_just_pressed("arma3"):
 		select_weapon(2)
+		shootTimer.stop()
 		print("arma 3 faca")
 	if Input.is_action_just_pressed("disparar"):
 		var direction2 = (get_global_mouse_position() - global_position).normalized()
@@ -60,10 +61,11 @@ func _physics_process(_delta):
 		
 #disparar arma seleccionado
 func shoot_current_weapon(direction: Vector2):
+	if not shootTimer.is_stopped():
+		return
 	if is_reloading:
 		print("¡Todavía recargando!")
-		return
-	
+		return	
 	match current_weapon_index:
 		0:  # Revolver
 			if current_revolver_ammo > 0:
@@ -81,6 +83,7 @@ func shoot_current_weapon(direction: Vector2):
 			else:
 				print("Sin balas")
 				start_reload_escopeta()
+	shootTimer.start()
 
 func start_reload_revolver():
 	if current_revolver_ammo < max_revolver_ammo and not is_reloading:

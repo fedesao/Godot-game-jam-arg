@@ -23,8 +23,8 @@ Global="*res://CodigoGlobal/Global.gd"
 
 [display]
 
-window/size/viewport_width=576
-window/size/viewport_height=324
+window/size/viewport_width=800
+window/size/viewport_height=600
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_height"
 
