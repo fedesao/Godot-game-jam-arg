@@ -19,3 +19,4 @@ var escopetaDmg:int = 1
 #enemigos
 var enemigo_1_vida:int = 12
 var enemigo_1_speed:float = 60.0
+var chancho_lata_vida:int = 30
