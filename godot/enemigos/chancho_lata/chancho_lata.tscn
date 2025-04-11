@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://d32f265ddxdj3"]
+
+[ext_resource type="Script" uid="uid://dbtml3qfomffn" path="res://enemigos/chancho_lata/chancho_lata.gd" id="1_i6rpc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bcai5"]
+size = Vector2(34, 26)
+
+[node name="ChanchoLata" type="CharacterBody2D" groups=["enemigos"]]
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_i6rpc")
+
+[node name="ColorRect" type="ColorRect" parent="." groups=["enemigos"]]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 19.0
+offset_bottom = 10.0
+color = Color(2.5028e-06, 0.705977, 0.807209, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -2)
+shape = SubResource("RectangleShape2D_bcai5")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -62.0
+offset_top = -46.0
+offset_right = 63.0
+offset_bottom = -21.0
+text = "Chancho de lata"
+
+[connection signal="enemigo_muere" from="." to="." method="_on_enemigo_muere"]

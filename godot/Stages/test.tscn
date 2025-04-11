@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://db16jlwca6eh0"]
+
+[ext_resource type="PackedScene" uid="uid://d32f265ddxdj3" path="res://enemigos/chancho_lata/chancho_lata.tscn" id="1_in8a3"]
+[ext_resource type="PackedScene" uid="uid://dsw4i7jsr1ank" path="res://characters/player.tscn" id="2_f7aib"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1mbjv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d1hr8"]
+size = Vector2(20, 437)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("2_f7aib")]
+position = Vector2(-12, 96)
+
+[node name="Camera2D2" type="Camera2D" parent="Player"]
+zoom = Vector2(0.25, 0.25)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_1mbjv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(180, 220.5)
+shape = SubResource("RectangleShape2D_d1hr8")
+
+[node name="ChanchoLata" parent="." instance=ExtResource("1_in8a3")]
+position = Vector2(350, 79)
