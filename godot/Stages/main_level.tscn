@@ -23,6 +23,16 @@ position = Vector2(443, 599)
 scale = Vector2(1.81957, 1.81957)
 texture = ExtResource("3_sjey7")
 
+[node name="Sprite2D2" type="Sprite2D" parent="Map"]
+position = Vector2(-1360, 599)
+scale = Vector2(1.81957, 1.81957)
+texture = ExtResource("3_sjey7")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Map"]
+position = Vector2(2255, 599)
+scale = Vector2(1.81957, 1.81957)
+texture = ExtResource("3_sjey7")
+
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="Map"]
 light_mask = 8
 visibility_layer = 8

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dsw4i7jsr1ank"]
+[gd_scene load_steps=18 format=3 uid="uid://dsw4i7jsr1ank"]
 
 [ext_resource type="Script" uid="uid://cio4jt3snka3a" path="res://characters/player.gd" id="1_dnjla"]
 [ext_resource type="PackedScene" uid="uid://cinqt7u3thb8x" path="res://characters/arma_1/proyectil_1.tscn" id="2_3eadt"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bnc8jhogm34ob" path="res://characters/arma_1/revolver.tscn" id="6_h1q25"]
 [ext_resource type="Texture2D" uid="uid://cn0xin7am7tl1" path="res://assets/cartucho_escopeta.png" id="6_q605b"]
 [ext_resource type="Texture2D" uid="uid://cxmeab7354m6y" path="res://assets/bala_revolver.png" id="7_eho78"]
+[ext_resource type="Texture2D" uid="uid://c2xst5wtkpsw0" path="res://assets/dash-icon.png" id="8_eho78"]
 
 [sub_resource type="Gradient" id="Gradient_h1q25"]
 offsets = PackedFloat32Array(0, 0.766234)
@@ -56,7 +57,7 @@ texture = SubResource("GradientTexture2D_j31ep")
 [node name="PointLight2D" type="PointLight2D" parent="PointLight2D2"]
 light_mask = 9
 visibility_layer = 9
-position = Vector2(7.5, 0.25)
+position = Vector2(30.75, 0.25)
 rotation = -0.78642
 scale = Vector2(0.75095, 0.75095)
 energy = 2.0
@@ -67,7 +68,7 @@ shadow_filter_smooth = 1.0
 shadow_item_cull_mask = 9
 texture = SubResource("GradientTexture2D_h1q25")
 offset = Vector2(40.8991, 41.0516)
-texture_scale = 1.3
+texture_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_6p3mc")
@@ -85,9 +86,6 @@ offset_top = -12.0
 offset_right = 25.0
 offset_bottom = 11.0
 text = "player"
-
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(47, 0)
 
 [node name="weapon" type="Node2D" parent="."]
 script = ExtResource("2_tory2")
@@ -177,7 +175,13 @@ offset_bottom = 736.0
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("7_eho78")
 
+[node name="Dash-icon" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(382, 476)
+scale = Vector2(0.273504, 0.273504)
+texture = ExtResource("8_eho78")
+
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 script = ExtResource("6_6t23p")
@@ -186,7 +190,15 @@ script = ExtResource("6_6t23p")
 
 [node name="Revolver" parent="WeaponSlots" instance=ExtResource("6_h1q25")]
 
+[node name="markerRevolver" type="Marker2D" parent="WeaponSlots/Revolver"]
+unique_name_in_owner = true
+position = Vector2(57, 0)
+
 [node name="Escopeta" parent="WeaponSlots" instance=ExtResource("5_evndh")]
+
+[node name="markerEscopeta" type="Marker2D" parent="WeaponSlots/Escopeta"]
+unique_name_in_owner = true
+position = Vector2(87, 0)
 
 [node name="ShootTimer" type="Timer" parent="."]
 wait_time = 0.2

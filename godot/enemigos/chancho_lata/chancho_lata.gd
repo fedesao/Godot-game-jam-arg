@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var vida = Global.chancho_lata_vida
+@onready var vidaActual = vida
 @export var speed_normal = 50
 @export var speed_embestida = 300
 @export var distancia_deteccion = 200
@@ -15,14 +16,15 @@ var direccion_embestida = Vector2.ZERO
 var timer = 0.0
 var posicion_inicio_embestida = Vector2.ZERO # Calcula la distancia recorrida
 signal enemigo_muere
+@onready var barraVida = $ProgressBar
 
 func _ready():
 	player = get_node("../Player")
 
+
 func _physics_process(delta):
 	match estado:
 		"perseguir":
-
 			var direction = global_position.direction_to(player.global_position)
 			velocity = direction * speed_normal			
 			# Si está cerca, embiste
@@ -32,17 +34,14 @@ func _physics_process(delta):
 				# Guardar dirección hacia el player para embestida
 				direccion_embestida = direction				
 		"preparar_embestida":
-
 			velocity = Vector2.ZERO
 			timer -= delta
 			if timer <= 0:
 				estado = "embestida"
 				timer = duracion_maxima_embestida
 				posicion_inicio_embestida = global_position
-				# Acá podrían ir efectos de sonido
-				
+				# Acá podrían ir efectos de sonido				
 		"embestida":
-
 			velocity = direccion_embestida * speed_embestida
 			# Detectar si chocó contra pared
 			if is_on_wall():
@@ -52,29 +51,27 @@ func _physics_process(delta):
 			# Por límite de tiempo
 			timer -= delta
 			if timer <= 0:
-
 				estado = "perseguir"
-				return
-				
+				return				
 			# Por límite de distancia
 			var distancia_recorrida = global_position.distance_to(posicion_inicio_embestida)
 			if distancia_recorrida >= distancia_maxima_embestida:
-
 				estado = "perseguir"
-				return
-			
+				return			
 		"aturdido":
-
 			velocity = Vector2.ZERO
 			timer -= delta
 			if timer <= 0:
 				estado = "perseguir"
 	move_and_slide()
+	barraVida.max_value = vida
+	barraVida.value = vidaActual
 
 func take_damage(dmgDone):
-	vida -= dmgDone
+	vidaActual -= dmgDone
 	print(" chancho =recibio daño")
-	if vida <= 0:
+	barraVida.value = vidaActual
+	if vidaActual <= 0:
 		enemigo_muere.emit()
 		queue_free()
 

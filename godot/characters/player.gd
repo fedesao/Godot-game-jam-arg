@@ -2,7 +2,8 @@ extends CharacterBody2D
 signal player_muere
 @export var speed = Global.playerSpeed
 @export var life = Global.playerLife
-@onready var posicion_pistola = $Marker2D
+@onready var posicion_pistola = %markerRevolver
+@onready var posicion_escopeta = %markerEscopeta
 @onready var weapon = $weapon
 var impulso = Vector2.ZERO
 #cambio de armas
@@ -33,6 +34,14 @@ var revolver_bullet_texture_used = preload("res://assets/bala_revolver_vacia.png
 
 @onready var is_reloading:bool = false
 @onready var barra_vida = %BarraVida
+
+##DASH
+@export var dash_speed: float = 600.0
+@export var dash_duration: float = 0.15
+@export var dash_cooldown: float = 1.0
+var can_dash: bool = true
+var is_dashing: bool = false
+var dash_direction: Vector2 = Vector2.ZERO
 
 
 func _ready():
@@ -76,6 +85,10 @@ func _physics_process(delta):
 		var direction2 = (get_global_mouse_position() - global_position).normalized()
 		shoot_current_weapon(direction2)
 		update_ammo_display()
+	if Input.is_action_just_pressed("dash") and can_dash and not is_dashing:
+		dash_direction = input_vector
+		if dash_direction != Vector2.ZERO:
+			start_dash()
 
 		
 #disparar arma seleccionado
@@ -99,7 +112,7 @@ func shoot_current_weapon(direction: Vector2):
 				print("¡No quedan balas de revolver!")
 		1:  # Escopeta
 			if current_escopeta_ammo > 0:
-				weapon.shoot_escopeta(posicion_pistola.global_position, direction, get_parent())
+				weapon.shoot_escopeta(posicion_escopeta.global_position, direction, get_parent())
 				current_escopeta_ammo -= 1
 				aplicar_retroceso(direction, 85)
 				$Camera2D.start_camera_shake(20.0)
@@ -222,3 +235,16 @@ func agregar_municion(arma: String, cantidad: int):
 		escopeta_actual_ammo_held = min(escopeta_actual_ammo_held + cantidad, escopeta_max_ammo_held)
 		print("Recogiste balas de escopeta. Total ahora: ", escopeta_actual_ammo_held)
 	update_ammo_display()
+
+###DASH
+func start_dash():
+	is_dashing = true
+	can_dash = false
+	impulso = dash_direction.normalized() * dash_speed
+	var dash_timer = get_tree().create_timer(dash_duration)
+	await dash_timer.timeout
+	is_dashing = false
+	# Enfriamiento
+	var cooldown_timer = get_tree().create_timer(dash_cooldown)
+	await cooldown_timer.timeout
+	can_dash = true
