@@ -1,14 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://db16jlwca6eh0"]
+[gd_scene load_steps=4 format=3 uid="uid://db16jlwca6eh0"]
 
+[ext_resource type="Texture2D" uid="uid://cqiri1cddkju4" path="res://light/assets/14622749380557.560858d24a85e.png" id="1_in8a3"]
+[ext_resource type="PackedScene" uid="uid://dyuqo18jfehoc" path="res://enemigos/luz_mala/luz_mala.tscn" id="2_1mbjv"]
 [ext_resource type="PackedScene" uid="uid://dsw4i7jsr1ank" path="res://characters/player.tscn" id="2_f7aib"]
-[ext_resource type="PackedScene" uid="uid://bqikuv73psgo0" path="res://enemigos/lobizon/lobizon.tscn" id="2_in8a3"]
 
 [node name="Node2D" type="Node2D"]
 
+[node name="Map" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Map"]
+position = Vector2(443, 599)
+scale = Vector2(1.81957, 1.81957)
+texture = ExtResource("1_in8a3")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Map"]
+light_mask = 9
+position = Vector2(3.05176e-05, 0)
+blend_mode = 1
+range_item_cull_mask = 0
+shadow_item_cull_mask = 0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Map"]
+color = Color(0, 0, 0, 1)
+
 [node name="Player" parent="." instance=ExtResource("2_f7aib")]
-position = Vector2(-12, 96)
+position = Vector2(0, -1)
 
-[node name="Camera2D2" type="Camera2D" parent="Player"]
-
-[node name="Lobizon" parent="." instance=ExtResource("2_in8a3")]
-position = Vector2(523, 266)
+[node name="Enemigo1" parent="." instance=ExtResource("2_1mbjv")]
+position = Vector2(670, 131)

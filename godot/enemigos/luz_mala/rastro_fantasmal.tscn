@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://c37am10qox16l"]
+
+[ext_resource type="Script" uid="uid://dwo3vyfxddm3e" path="res://enemigos/luz_mala/rastro_fantasmal.gd" id="1_k7gi4"]
+
+[sub_resource type="Gradient" id="Gradient_yl8qn"]
+offsets = PackedFloat32Array(0, 0.668831)
+colors = PackedColorArray(1, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k7gi4"]
+gradient = SubResource("Gradient_yl8qn")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d7lla"]
+
+[sub_resource type="Gradient" id="Gradient_hlbhx"]
+offsets = PackedFloat32Array(0, 0.675325)
+colors = PackedColorArray(1, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yl8qn"]
+gradient = SubResource("Gradient_hlbhx")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="RastroFantasmal" type="Area2D"]
+script = ExtResource("1_k7gi4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_k7gi4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2.33665, 2.33665)
+shape = SubResource("CircleShape2D_d7lla")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(5, 5)
+energy = 2.0
+range_item_cull_mask = 9
+shadow_enabled = true
+shadow_item_cull_mask = 9
+texture = SubResource("GradientTexture2D_yl8qn")
+
+[node name="FadeOut" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true

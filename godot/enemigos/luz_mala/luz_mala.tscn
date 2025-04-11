@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://dyuqo18jfehoc"]
+
+[ext_resource type="Script" uid="uid://r3fdrcb1s068" path="res://enemigos/luz_mala/luz_mala.gd" id="1_hlbhx"]
+
+[sub_resource type="Gradient" id="Gradient_mdlxf"]
+offsets = PackedFloat32Array(0, 0.616883)
+colors = PackedColorArray(1, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_88sac"]
+gradient = SubResource("Gradient_mdlxf")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_hlbhx"]
+offsets = PackedFloat32Array(0, 0.675325)
+colors = PackedColorArray(1, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mdlxf"]
+gradient = SubResource("Gradient_hlbhx")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mhxxn"]
+
+[node name="Enemigo1" type="CharacterBody2D" groups=["enemigos"]]
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_hlbhx")
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["enemigos"]]
+texture = SubResource("GradientTexture2D_88sac")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(5, 5)
+energy = 4.0
+range_item_cull_mask = 9
+shadow_enabled = true
+shadow_item_cull_mask = 9
+texture = SubResource("GradientTexture2D_mdlxf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2.23838, 2.23838)
+shape = SubResource("CircleShape2D_mhxxn")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -25.0
+offset_top = -45.0
+offset_right = 37.0
+offset_bottom = -22.0
+text = "luz mala"
+
+[connection signal="enemigo_muere" from="." to="." method="_on_enemigo_muere"]
