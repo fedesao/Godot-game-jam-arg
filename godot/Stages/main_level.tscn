@@ -1,9 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhafahdpnw8ah"]
+[gd_scene load_steps=14 format=3 uid="uid://bhafahdpnw8ah"]
 
 [ext_resource type="PackedScene" uid="uid://dsw4i7jsr1ank" path="res://characters/player.tscn" id="1_uia1v"]
 [ext_resource type="PackedScene" uid="uid://8fdqdt6nitfv" path="res://enemigos/enemy_1/enemigo_1.tscn" id="2_c678c"]
+[ext_resource type="AudioStream" uid="uid://bx36efyk7gtf2" path="res://music/mining-gold-on-16-psyche-140738.mp3" id="2_m7fka"]
+[ext_resource type="AudioStream" uid="uid://craqfq28bg5eb" path="res://SoundEffects/Escopeta/080902_shotgun-39753.mp3" id="3_idl2b"]
 [ext_resource type="Texture2D" uid="uid://cqiri1cddkju4" path="res://light/assets/14622749380557.560858d24a85e.png" id="3_sjey7"]
 [ext_resource type="PackedScene" uid="uid://d32f265ddxdj3" path="res://enemigos/chancho_lata/chancho_lata.tscn" id="4_h02h0"]
+[ext_resource type="AudioStream" uid="uid://dueme36mo2n7b" path="res://SoundEffects/Escopeta/reload.mp3" id="5_idl2b"]
+[ext_resource type="AudioStream" uid="uid://b6tf2sinekh32" path="res://SoundEffects/Escopeta/realistic-shotgun-cocking-sound-38640.mp3" id="5_inofj"]
+[ext_resource type="AudioStream" uid="uid://dml2k1r6rhp1q" path="res://SoundEffects/Revolver/shootRevolver.mp3" id="6_inofj"]
+[ext_resource type="AudioStream" uid="uid://ccmhnf6fg358f" path="res://SoundEffects/Revolver/revolver-spinning-sound.mp3" id="7_bxlso"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_h02h0"]
 polygon = PackedVector2Array(-221, 238, -220, 271, 15, 271, 14, 240)
@@ -20,16 +26,6 @@ polygon = PackedVector2Array(656, 240, 832, 244, 831, 273, 787, 271, 786, 457, 8
 
 [node name="Sprite2D" type="Sprite2D" parent="Map"]
 position = Vector2(443, 599)
-scale = Vector2(1.81957, 1.81957)
-texture = ExtResource("3_sjey7")
-
-[node name="Sprite2D2" type="Sprite2D" parent="Map"]
-position = Vector2(-1360, 599)
-scale = Vector2(1.81957, 1.81957)
-texture = ExtResource("3_sjey7")
-
-[node name="Sprite2D3" type="Sprite2D" parent="Map"]
-position = Vector2(2255, 599)
 scale = Vector2(1.81957, 1.81957)
 texture = ExtResource("3_sjey7")
 
@@ -64,8 +60,30 @@ color = Color(0, 0, 0, 1)
 [node name="Player" parent="." instance=ExtResource("1_uia1v")]
 position = Vector2(100, 338)
 
+[node name="ShootAudioEscopeta" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("3_idl2b")
+
+[node name="ChangeBulletAudioEscopeta" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("5_inofj")
+
+[node name="ReloadingAudioEscopeta" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("5_idl2b")
+
+[node name="ShootAudioRevolver" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("6_inofj")
+volume_db = -1.874
+
+[node name="ReloadingRevolver" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("7_bxlso")
+volume_db = -5.622
+
 [node name="Enemigo1" parent="." instance=ExtResource("2_c678c")]
 position = Vector2(487, 163)
 
 [node name="ChanchoLata" parent="." instance=ExtResource("4_h02h0")]
 position = Vector2(621, 527)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_m7fka")
+volume_db = -7.924
+autoplay = true

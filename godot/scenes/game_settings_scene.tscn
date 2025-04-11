@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://g4qhvbvdm62w"]
+[gd_scene load_steps=7 format=3 uid="uid://g4qhvbvdm62w"]
 
 [ext_resource type="Script" uid="uid://rr80abr4de50" path="res://scenes/game_settings_scene.gd" id="1_3764u"]
 [ext_resource type="PackedScene" uid="uid://bkk87o2ooo6at" path="res://ui/overlays/fade_overlay.tscn" id="1_w6tmj"]
+[ext_resource type="FontFile" uid="uid://c1qaouv4f0fx7" path="res://fonts/Darkmode demo-Regular.ttf" id="2_1ykg1"]
 [ext_resource type="PackedScene" uid="uid://nbaodrlopo7y" path="res://ui/components/game_settings.tscn" id="2_qsqie"]
 [ext_resource type="Theme" uid="uid://d22mpqutkotsu" path="res://ui/theme.tres" id="3_unbh4"]
-[ext_resource type="AudioStream" uid="uid://dlchk3c1baiy8" path="res://music/corgie-title.ogg" id="4_7okdb"]
+[ext_resource type="AudioStream" uid="uid://mf5ebmc3mgah" path="res://music/suspense-dark-scary-atmosphere-153302.mp3" id="6_y4d2p"]
 
 [node name="GameSettingsScene" type="Node2D"]
 script = ExtResource("1_3764u")
@@ -25,7 +26,9 @@ theme_override_constants/separation = 20
 [node name="SettingsLabel" type="Label" parent="UI/CenterContainer/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"HeaderLarge"
-text = "settings"
+theme_override_fonts/font = ExtResource("2_1ykg1")
+theme_override_font_sizes/font_size = 25
+text = "Opciones"
 
 [node name="GameSettings" parent="UI/CenterContainer/VBoxContainer" instance=ExtResource("2_qsqie")]
 layout_mode = 2
@@ -34,13 +37,16 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("3_unbh4")
-text = "return_to_main"
+theme_override_fonts/font = ExtResource("2_1ykg1")
+theme_override_font_sizes/font_size = 25
+text = "Regresar al menu"
 
 [node name="FadeOverlay" parent="UI" instance=ExtResource("1_w6tmj")]
 unique_name_in_owner = true
 visible = false
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_7okdb")
+stream = ExtResource("6_y4d2p")
+volume_db = -4.685
 autoplay = true
 bus = &"Music"

@@ -23,6 +23,9 @@ var escopeta_actual_ammo_held = Global.escopeta_actual_ammo_held
 @export var escopeta_reload_time:float = 1.5
 var escopeta_bullet_texture = preload("res://assets/cartucho_escopeta.png")
 var escopeta_bullet_texture_used = preload("res://assets/cartucho_escopeta_vacia.png")
+@onready var escopeta_reload_audio = $ReloadingAudioEscopeta
+@onready var escopeta_shoot_audio = $ShootAudioEscopeta
+@onready var escopeta_changebullet_audio = $ChangeBulletAudioEscopeta
 ####REVOVLER
 var revolver_max_ammo_held = Global.revolver_max_ammo_held
 var revolver_actual_ammo_held = Global.revolver_actual_ammo_held
@@ -34,6 +37,8 @@ var revolver_bullet_texture_used = preload("res://assets/bala_revolver_vacia.png
 
 @onready var is_reloading:bool = false
 @onready var barra_vida = %BarraVida
+@onready var revolver_shoot_audio = $ShootAudioRevolver
+@onready var revolver_reload_audio = $ReloadingRevolver
 
 ##DASH
 @export var dash_speed: float = 600.0
@@ -105,6 +110,7 @@ func shoot_current_weapon(direction: Vector2):
 				weapon.shoot_pistola(posicion_pistola.global_position, direction, get_parent())
 				current_revolver_ammo -= 1
 				print("revolver - Balas cargador: ", current_revolver_ammo)
+				revolver_shoot_audio.play()
 			elif revolver_actual_ammo_held > 0:
 				print("Sin balas en el cargador. Recargando...")
 				start_reload_revolver()
@@ -114,9 +120,12 @@ func shoot_current_weapon(direction: Vector2):
 			if current_escopeta_ammo > 0:
 				weapon.shoot_escopeta(posicion_escopeta.global_position, direction, get_parent())
 				current_escopeta_ammo -= 1
+				escopeta_shoot_audio.play()
 				aplicar_retroceso(direction, 85)
 				$Camera2D.start_camera_shake(20.0)
 				print("escopeta - Balas cargador: ", current_escopeta_ammo)
+				await get_tree().create_timer(1.0).timeout
+				escopeta_changebullet_audio.play()
 			elif escopeta_actual_ammo_held > 0:
 				print("Sin balas en el cargador. Recargando...")
 				start_reload_escopeta()
@@ -132,6 +141,7 @@ func start_reload_revolver():
 
 	var balas_necesarias = max_revolver_ammo - current_revolver_ammo
 	var balas_a_recargar = min(balas_necesarias, revolver_actual_ammo_held)
+	revolver_reload_audio.play()
 
 	if balas_a_recargar <= 0:
 		print("No quedan balas para recargar el revolver.")
@@ -155,6 +165,8 @@ func start_reload_escopeta():
 
 	var balas_necesarias = max_escopeta_ammo - current_escopeta_ammo
 	var balas_a_recargar = min(balas_necesarias, escopeta_actual_ammo_held)
+	escopeta_reload_audio.play()
+
 
 	if balas_a_recargar <= 0:
 		print("No quedan balas para recargar la escopeta.")
