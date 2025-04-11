@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqikuv73psgo0"]
+
+[ext_resource type="Script" uid="uid://cshkgposckd53" path="res://enemigos/lobizon/lobizon.gd" id="1_hql7e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bcai5"]
+size = Vector2(34, 26)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hql7e"]
+
+[node name="Lobizon" type="CharacterBody2D" groups=["enemigos"]]
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_hql7e")
+
+[node name="ColorRect" type="ColorRect" parent="." groups=["enemigos"]]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 19.0
+offset_bottom = 10.0
+color = Color(1, 0.113725, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -2)
+shape = SubResource("RectangleShape2D_bcai5")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -25.0
+offset_top = -45.0
+offset_right = 37.0
+offset_bottom = -22.0
+text = "lobizon"
+
+[node name="ProyectilDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProyectilDetector"]
+scale = Vector2(10, 10)
+shape = SubResource("CircleShape2D_hql7e")
+
+[connection signal="enemigo_muere" from="." to="." method="_on_enemigo_muere"]
+[connection signal="area_entered" from="ProyectilDetector" to="." method="_on_area_detection_area_entered"]
