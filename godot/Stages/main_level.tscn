@@ -23,8 +23,11 @@ scale = Vector2(1.81957, 1.81957)
 texture = ExtResource("3_sjey7")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="Map"]
+light_mask = 9
 position = Vector2(3.05176e-05, 0)
 blend_mode = 1
+range_item_cull_mask = 0
+shadow_item_cull_mask = 0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Map"]
 occluder = SubResource("OccluderPolygon2D_h02h0")
