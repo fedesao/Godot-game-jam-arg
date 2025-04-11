@@ -71,7 +71,7 @@ projectile_scene_2 = ExtResource("4_x0jl3")
 layer = 8
 script = ExtResource("5_j31ep")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="hud-porta-balas" type="ColorRect" parent="CanvasLayer"]
 offset_left = 13.0
 offset_top = 460.0
 offset_right = 186.0
