@@ -10,15 +10,17 @@ var weapon_list: Array = []
 var current_weapon_index = 0
 #RELOAD
 @onready var shootTimer = $ShootTimer
-
+var current_weapon_name = "revolver"
 ####ESCOPETA
 @export var max_escopeta_ammo:int = 2
 @onready var current_escopeta_ammo = max_escopeta_ammo
 @export var escopeta_reload_time:float = 1.5
+var escopeta_bullet_texture = preload("res://assets/cartucho_escopeta.png")
 ####REVOVLER
 @export var max_revolver_ammo:int = 6
 @onready var current_revolver_ammo = max_revolver_ammo
 @export var revolver_reload_time:float = 2.0
+var revolver_bullet_texture = preload("res://assets/bala_revolver.png")
 
 @onready var is_reloading:bool = false
 
@@ -26,6 +28,7 @@ var current_weapon_index = 0
 
 func _ready():
 	# Guardamos todas las armas en el slot
+	update_ammo_display()
 	weapon_list = weapon_slot.get_children()
 	print(weapon_list)
 	if weapon_list.size() > 0:
@@ -46,10 +49,14 @@ func _physics_process(_delta):
 		select_weapon(0)
 		print("arma 1 revolver")
 		shootTimer.stop()
+		current_weapon_name = "revolver"
+		update_ammo_display()
 	elif Input.is_action_just_pressed("arma2"):
 		select_weapon(1)
 		shootTimer.stop()
 		print("arma 2 escopeta")
+		current_weapon_name = "escopeta"
+		update_ammo_display()
 	elif Input.is_action_just_pressed("arma3"):
 		select_weapon(2)
 		shootTimer.stop()
@@ -57,6 +64,7 @@ func _physics_process(_delta):
 	if Input.is_action_just_pressed("disparar"):
 		var direction2 = (get_global_mouse_position() - global_position).normalized()
 		shoot_current_weapon(direction2)
+		update_ammo_display()
 
 		
 #disparar arma seleccionado
@@ -93,6 +101,7 @@ func start_reload_revolver():
 		current_revolver_ammo = max_revolver_ammo
 		is_reloading = false
 		print("Recarga completa. Balas: ", current_revolver_ammo)
+		update_ammo_display()
 
 func start_reload_escopeta():
 	if current_escopeta_ammo < max_escopeta_ammo and not is_reloading:
@@ -102,6 +111,7 @@ func start_reload_escopeta():
 		current_escopeta_ammo = max_escopeta_ammo
 		is_reloading = false
 		print("Recarga completa. Balas: ", current_escopeta_ammo)
+		update_ammo_display()
 
 func select_weapon(index: int):
 	current_weapon_index = index
@@ -110,3 +120,20 @@ func select_weapon(index: int):
 	for i in range(weapon_list.size()):
 		weapon_list[i].visible = (i == index)
 	current_weapon = weapon_list[index]
+
+func update_ammo_display():
+	# Acceder al `HBoxContainer` que contiene las balas
+	var hbox = %Cargador_balas
+	# Limpiar el `HBoxContainer`
+	for child in hbox.get_children():
+		hbox.remove_child(child)
+		child.queue_free()		
+	# Determinar la textura y la munición según el arma seleccionada
+	var bullet_texture = revolver_bullet_texture if current_weapon_name == "revolver" else escopeta_bullet_texture
+	var current_ammo = current_revolver_ammo if current_weapon_name == "revolver" else current_escopeta_ammo
+	# Añadir nuevos `TextureRect` al `HBoxContainer`
+	for i in range(current_ammo):
+		var bullet_rect = TextureRect.new()
+		bullet_rect.texture = bullet_texture
+		bullet_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED  # Ajusta según el diseño deseado
+		hbox.add_child(bullet_rect)

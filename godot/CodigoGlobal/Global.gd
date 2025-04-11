@@ -10,6 +10,7 @@ var balasDisponibles:int = 6 #a revisar
 #pistola
 var balaSpeed1:float = 200.0
 var balaDmg1:int = 5
+
 #escopeta
 var escopetaSpeed:float = 150.0
 var escopetaDmg:int = 1
