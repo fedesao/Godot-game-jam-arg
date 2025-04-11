@@ -1,18 +1,50 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhafahdpnw8ah"]
+[gd_scene load_steps=7 format=3 uid="uid://bhafahdpnw8ah"]
 
 [ext_resource type="PackedScene" uid="uid://dsw4i7jsr1ank" path="res://characters/player.tscn" id="1_uia1v"]
 [ext_resource type="PackedScene" uid="uid://8fdqdt6nitfv" path="res://enemigos/enemy_1/enemigo_1.tscn" id="2_c678c"]
+[ext_resource type="Texture2D" uid="uid://cqiri1cddkju4" path="res://light/assets/14622749380557.560858d24a85e.png" id="3_sjey7"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_h02h0"]
+polygon = PackedVector2Array(-221, 238, -220, 271, 15, 271, 14, 240)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_m7fka"]
+polygon = PackedVector2Array(155, 242, 155, 273, 560, 273, 559, 244)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_5pv5t"]
+polygon = PackedVector2Array(656, 240, 832, 244, 831, 273, 787, 271, 786, 457, 861, 457, 861, 474, 767, 472, 767, 457, 713, 453, 716, 439, 765, 440, 768, 268, 662, 265)
 
 [node name="MainLevel" type="Node2D"]
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -373.0
-offset_top = -114.0
-offset_right = 1151.0
-offset_bottom = 553.0
-color = Color(0.243499, 0.309, 0.119371, 1)
+[node name="Map" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Map"]
+position = Vector2(443, 599)
+scale = Vector2(1.81957, 1.81957)
+texture = ExtResource("3_sjey7")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Map"]
+position = Vector2(3.05176e-05, 0)
+blend_mode = 1
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Map"]
+occluder = SubResource("OccluderPolygon2D_h02h0")
+occluder_light_mask = 8
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Map"]
+light_mask = 8
+visibility_layer = 8
+occluder = SubResource("OccluderPolygon2D_m7fka")
+occluder_light_mask = 8
+
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="Map"]
+occluder = SubResource("OccluderPolygon2D_5pv5t")
+occluder_light_mask = 8
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Map"]
+color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_uia1v")]
+position = Vector2(610, 470)
 
 [node name="Enemigo1" parent="." instance=ExtResource("2_c678c")]
 position = Vector2(487, 163)
