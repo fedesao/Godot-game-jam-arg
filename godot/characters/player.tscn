@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dsw4i7jsr1ank"]
+[gd_scene load_steps=17 format=3 uid="uid://dsw4i7jsr1ank"]
 
 [ext_resource type="Script" uid="uid://cio4jt3snka3a" path="res://characters/player.gd" id="1_dnjla"]
 [ext_resource type="PackedScene" uid="uid://cinqt7u3thb8x" path="res://characters/arma_1/proyectil_1.tscn" id="2_3eadt"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://8b6nhkdm1grq" path="res://characters/HUD.gd" id="5_j31ep"]
 [ext_resource type="Script" uid="uid://c4q4oc5k2dwcr" path="res://characters/camera_2d.gd" id="6_6t23p"]
 [ext_resource type="PackedScene" uid="uid://bnc8jhogm34ob" path="res://characters/arma_1/revolver.tscn" id="6_h1q25"]
+[ext_resource type="Texture2D" uid="uid://cn0xin7am7tl1" path="res://assets/cartucho_escopeta.png" id="6_q605b"]
+[ext_resource type="Texture2D" uid="uid://cxmeab7354m6y" path="res://assets/bala_revolver.png" id="7_eho78"]
 
 [sub_resource type="Gradient" id="Gradient_h1q25"]
 offsets = PackedFloat32Array(0, 0.766234)
@@ -97,10 +99,10 @@ layer = 8
 script = ExtResource("5_j31ep")
 
 [node name="hud-porta-balas" type="ColorRect" parent="CanvasLayer"]
-offset_left = 13.0
-offset_top = 460.0
-offset_right = 186.0
-offset_bottom = 532.0
+offset_left = 17.0
+offset_top = 470.0
+offset_right = 190.0
+offset_bottom = 522.0
 color = Color(0.27451, 0.27451, 0.27451, 0.317647)
 
 [node name="Cargador_balas" type="HBoxContainer" parent="CanvasLayer"]
@@ -143,6 +145,37 @@ offset_top = 436.0
 offset_right = 62.0
 offset_bottom = 459.0
 text = "Vida"
+
+[node name="balasRevolver" type="Label" parent="CanvasLayer"]
+offset_left = 228.0
+offset_top = 445.0
+offset_right = 337.0
+offset_bottom = 468.0
+text = "balas revolver"
+
+[node name="balasEscopeta" type="Label" parent="CanvasLayer"]
+offset_left = 225.0
+offset_top = 485.0
+offset_right = 340.0
+offset_bottom = 534.0
+text = "balas escopeta
+"
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer"]
+offset_left = 200.0
+offset_top = 482.0
+offset_right = 411.0
+offset_bottom = 776.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("6_q605b")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_left = 200.0
+offset_top = 442.0
+offset_right = 411.0
+offset_bottom = 736.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("7_eho78")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true

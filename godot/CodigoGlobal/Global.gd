@@ -11,9 +11,14 @@ var balasDisponibles:int = 6 #a revisar
 var balaSpeed1:float = 200.0
 var balaDmg1:int = 5
 
+var revolver_actual_ammo_held:int = 10
+var revolver_max_ammo_held:int = 40
+var escopeta_max_ammo_held:int = 48
 #escopeta
 var escopetaSpeed:float = 150.0
 var escopetaDmg:int = 2
+
+var escopeta_actual_ammo_held:int = 10
 
 
 #enemigos

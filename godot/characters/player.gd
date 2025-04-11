@@ -15,12 +15,16 @@ var current_weapon_index = 0
 var current_weapon_name = "revolver"
 @onready var progress_bar = %ProgressBar
 ####ESCOPETA
+var escopeta_max_ammo_held = Global.escopeta_max_ammo_held
+var escopeta_actual_ammo_held = Global.escopeta_actual_ammo_held
 @export var max_escopeta_ammo:int = 2
 @onready var current_escopeta_ammo = max_escopeta_ammo
 @export var escopeta_reload_time:float = 1.5
 var escopeta_bullet_texture = preload("res://assets/cartucho_escopeta.png")
 var escopeta_bullet_texture_used = preload("res://assets/cartucho_escopeta_vacia.png")
 ####REVOVLER
+var revolver_max_ammo_held = Global.revolver_max_ammo_held
+var revolver_actual_ammo_held = Global.revolver_actual_ammo_held
 @export var max_revolver_ammo:int = 6
 @onready var current_revolver_ammo = max_revolver_ammo
 @export var revolver_reload_time:float = 2.0
@@ -71,7 +75,6 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("disparar"):
 		var direction2 = (get_global_mouse_position() - global_position).normalized()
 		shoot_current_weapon(direction2)
-		
 		update_ammo_display()
 
 		
@@ -81,52 +84,80 @@ func shoot_current_weapon(direction: Vector2):
 		return
 	if is_reloading:
 		print("¡Todavía recargando!")
-		return	
+		return
+
 	match current_weapon_index:
 		0:  # Revolver
 			if current_revolver_ammo > 0:
 				weapon.shoot_pistola(posicion_pistola.global_position, direction, get_parent())
 				current_revolver_ammo -= 1
-				print("revolver-Balas restantes: ", current_revolver_ammo)
-			else:
-				print("Sin balas")
+				print("revolver - Balas cargador: ", current_revolver_ammo)
+			elif revolver_actual_ammo_held > 0:
+				print("Sin balas en el cargador. Recargando...")
 				start_reload_revolver()
+			else:
+				print("¡No quedan balas de revolver!")
 		1:  # Escopeta
 			if current_escopeta_ammo > 0:
 				weapon.shoot_escopeta(posicion_pistola.global_position, direction, get_parent())
 				current_escopeta_ammo -= 1
-				print("escopeta-Balas restantes: ", current_escopeta_ammo)
-				aplicar_retroceso(direction, 85)#RETROSESO ESCOPETA
+				aplicar_retroceso(direction, 85)
 				$Camera2D.start_camera_shake(20.0)
-			else:
-				print("Sin balas")
+				print("escopeta - Balas cargador: ", current_escopeta_ammo)
+			elif escopeta_actual_ammo_held > 0:
+				print("Sin balas en el cargador. Recargando...")
 				start_reload_escopeta()
+			else:
+				print("¡No quedan balas de escopeta!")
 	shootTimer.start()
+	update_ammo_display()
+
 
 func start_reload_revolver():
-	if current_revolver_ammo < max_revolver_ammo and not is_reloading:
-		is_reloading = true
-		show_reload_bar(revolver_reload_time)
-		print("Recargando revolver...")		
-		var timer = get_tree().create_timer(revolver_reload_time)
-		show_reload_bar(revolver_reload_time)
-		await timer.timeout		
-		current_revolver_ammo = max_revolver_ammo
-		is_reloading = false
-		print("Recarga completa. Balas: ", current_revolver_ammo)
-		update_ammo_display()
+	if is_reloading or current_revolver_ammo == max_revolver_ammo:
+		return
+
+	var balas_necesarias = max_revolver_ammo - current_revolver_ammo
+	var balas_a_recargar = min(balas_necesarias, revolver_actual_ammo_held)
+
+	if balas_a_recargar <= 0:
+		print("No quedan balas para recargar el revolver.")
+		return
+
+	is_reloading = true
+	show_reload_bar(revolver_reload_time)
+	print("Recargando revolver...")
+	await get_tree().create_timer(revolver_reload_time).timeout
+
+	current_revolver_ammo += balas_a_recargar
+	revolver_actual_ammo_held -= balas_a_recargar
+	is_reloading = false
+	print("Recarga completa. Cargador: ", current_revolver_ammo, " | Reservas: ", revolver_actual_ammo_held)
+	update_ammo_display()
+
 
 func start_reload_escopeta():
-	if current_escopeta_ammo < max_escopeta_ammo and not is_reloading:
-		is_reloading = true		
-		print("Recargando escopeta...")
-		var timer = get_tree().create_timer(escopeta_reload_time)
-		show_reload_bar(escopeta_reload_time)
-		await timer.timeout		
-		current_escopeta_ammo = max_escopeta_ammo
-		is_reloading = false
-		print("Recarga completa. Balas: ", current_escopeta_ammo)
-		update_ammo_display()
+	if is_reloading or current_escopeta_ammo == max_escopeta_ammo:
+		return
+
+	var balas_necesarias = max_escopeta_ammo - current_escopeta_ammo
+	var balas_a_recargar = min(balas_necesarias, escopeta_actual_ammo_held)
+
+	if balas_a_recargar <= 0:
+		print("No quedan balas para recargar la escopeta.")
+		return
+
+	is_reloading = true
+	show_reload_bar(escopeta_reload_time)
+	print("Recargando escopeta...")
+	await get_tree().create_timer(escopeta_reload_time).timeout
+
+	current_escopeta_ammo += balas_a_recargar
+	escopeta_actual_ammo_held -= balas_a_recargar
+	is_reloading = false
+	print("Recarga completa. Cargador: ", current_escopeta_ammo, " | Reservas: ", escopeta_actual_ammo_held)
+	update_ammo_display()
+
 
 func select_weapon(index: int):
 	current_weapon_index = index
@@ -137,21 +168,22 @@ func select_weapon(index: int):
 	current_weapon = weapon_list[index]
 
 func update_ammo_display():
-	# Acceder al `HBoxContainer` que contiene las balas
 	var hbox = %Cargador_balas
-	# Limpiar el `HBoxContainer`
 	for child in hbox.get_children():
 		hbox.remove_child(child)
-		child.queue_free()		
-	# Determinar la textura y la munición según el arma seleccionada
+		child.queue_free()
 	var bullet_texture = revolver_bullet_texture if current_weapon_name == "revolver" else escopeta_bullet_texture
 	var current_ammo = current_revolver_ammo if current_weapon_name == "revolver" else current_escopeta_ammo
-	# Añadir nuevos `TextureRect` al `HBoxContainer`
 	for i in range(current_ammo):
 		var bullet_rect = TextureRect.new()
 		bullet_rect.texture = bullet_texture
-		bullet_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED  # Ajusta según el diseño deseado
+		bullet_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		hbox.add_child(bullet_rect)
+	# Actualizar los labels de texto
+	$CanvasLayer/balasRevolver.text = str(current_revolver_ammo) + "/" + str(revolver_actual_ammo_held)
+	$CanvasLayer/balasEscopeta.text = str(current_escopeta_ammo) + "/" + str(escopeta_actual_ammo_held)
+
+		
 		
 func show_reload_bar(duration: float):
 	progress_bar.visible = true
@@ -181,3 +213,12 @@ func update_life():
 	
 func aplicar_retroceso(direccion_disparo: Vector2, fuerza: float):
 	impulso = -direccion_disparo.normalized() * fuerza
+
+func agregar_municion(arma: String, cantidad: int):
+	if arma == "revolver":
+		revolver_actual_ammo_held = min(revolver_actual_ammo_held + cantidad, revolver_max_ammo_held)
+		print("Recogiste balas de revolver. Total ahora: ", revolver_actual_ammo_held)
+	elif arma == "escopeta":
+		escopeta_actual_ammo_held = min(escopeta_actual_ammo_held + cantidad, escopeta_max_ammo_held)
+		print("Recogiste balas de escopeta. Total ahora: ", escopeta_actual_ammo_held)
+	update_ammo_display()
