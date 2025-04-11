@@ -1,8 +1,10 @@
 extends CharacterBody2D
+signal player_muere
 @export var speed = Global.playerSpeed
 @export var life = Global.playerLife
 @onready var posicion_pistola = $Marker2D
 @onready var weapon = $weapon
+var impulso = Vector2.ZERO
 #cambio de armas
 @onready var weapon_slot = $WeaponSlots
 var current_weapon: Node = null
@@ -26,6 +28,7 @@ var revolver_bullet_texture = preload("res://assets/bala_revolver.png")
 var revolver_bullet_texture_used = preload("res://assets/bala_revolver_vacia.png")
 
 @onready var is_reloading:bool = false
+@onready var barra_vida = %BarraVida
 
 
 func _ready():
@@ -34,15 +37,18 @@ func _ready():
 	print(weapon_list)
 	if weapon_list.size() > 0:
 		select_weapon(0)
+	barra_vida.max_value = life
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	# Normalizamos para evitar que se mueva más rápido en diagonal
 	input_vector = input_vector.normalized()
-	velocity = input_vector * speed
+	velocity = input_vector * speed + impulso
 	move_and_slide()
+	impulso = impulso.lerp(Vector2.ZERO, 5 * delta)
+	update_life()
    # para que rote hacia el mouse
 	look_at(get_global_mouse_position())
 	#SELECCION DE ARMAS##
@@ -65,6 +71,7 @@ func _physics_process(_delta):
 	if Input.is_action_just_pressed("disparar"):
 		var direction2 = (get_global_mouse_position() - global_position).normalized()
 		shoot_current_weapon(direction2)
+		
 		update_ammo_display()
 
 		
@@ -89,6 +96,8 @@ func shoot_current_weapon(direction: Vector2):
 				weapon.shoot_escopeta(posicion_pistola.global_position, direction, get_parent())
 				current_escopeta_ammo -= 1
 				print("escopeta-Balas restantes: ", current_escopeta_ammo)
+				aplicar_retroceso(direction, 85)#RETROSESO ESCOPETA
+				$Camera2D.start_camera_shake(20.0)
 			else:
 				print("Sin balas")
 				start_reload_escopeta()
@@ -156,3 +165,19 @@ func show_reload_bar(duration: float):
 		progress_bar.value = clamp(percentage, 0, 100)
 	progress_bar.value = 100
 	progress_bar.visible = false
+
+
+###RECIBIR DAÑO
+func take_damage_player(dmgDone):
+	life -= dmgDone
+	print(" player recibio daño")
+	print(life)
+	if life <= 0:
+		player_muere.emit()
+		queue_free()
+		
+func update_life():
+	barra_vida.value = life	
+	
+func aplicar_retroceso(direccion_disparo: Vector2, fuerza: float):
+	impulso = -direccion_disparo.normalized() * fuerza

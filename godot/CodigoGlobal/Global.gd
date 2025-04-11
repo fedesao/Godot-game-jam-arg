@@ -13,10 +13,11 @@ var balaDmg1:int = 5
 
 #escopeta
 var escopetaSpeed:float = 150.0
-var escopetaDmg:int = 1
+var escopetaDmg:int = 2
 
 
 #enemigos
 var enemigo_1_vida:int = 12
 var enemigo_1_speed:float = 60.0
+var enemyDmg:int = 4
 var chancho_lata_vida:int = 30

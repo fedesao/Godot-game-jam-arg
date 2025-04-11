@@ -2,7 +2,7 @@ extends Node
 @export var projectile_scene_1: PackedScene
 @export var projectile_scene_2 : PackedScene
 
-@export var num_pellets: int = 4
+@export var num_pellets: int = 6
 @export var spread_angle_degrees: float = 25.0
 
 
