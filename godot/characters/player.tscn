@@ -49,3 +49,7 @@ rotation_smoothing_enabled = true
 [node name="Revolver" parent="WeaponSlots" instance=ExtResource("6_h1q25")]
 
 [node name="Escopeta" parent="WeaponSlots" instance=ExtResource("5_evndh")]
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true

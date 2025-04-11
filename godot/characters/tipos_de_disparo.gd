@@ -5,6 +5,8 @@ extends Node
 @export var num_pellets: int = 4
 @export var spread_angle_degrees: float = 25.0
 
+
+
 func shoot_pistola(origin: Vector2, direction: Vector2, parent: Node):
 	if projectile_scene_1 == null:
 		return
@@ -12,6 +14,7 @@ func shoot_pistola(origin: Vector2, direction: Vector2, parent: Node):
 	parent.add_child(projectile)
 	projectile.global_position = origin
 	projectile.set_direction(direction)
+
 
 func shoot_escopeta(origin: Vector2, direction: Vector2, parent: Node):
 	if projectile_scene_2 == null:
@@ -24,3 +27,5 @@ func shoot_escopeta(origin: Vector2, direction: Vector2, parent: Node):
 		parent.add_child(projectile)
 		projectile.global_position = origin
 		projectile.set_direction(dir)
+
+		
