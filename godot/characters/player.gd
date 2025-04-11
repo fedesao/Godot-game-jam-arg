@@ -11,23 +11,24 @@ var current_weapon_index = 0
 #RELOAD
 @onready var shootTimer = $ShootTimer
 var current_weapon_name = "revolver"
+@onready var progress_bar = %ProgressBar
 ####ESCOPETA
 @export var max_escopeta_ammo:int = 2
 @onready var current_escopeta_ammo = max_escopeta_ammo
 @export var escopeta_reload_time:float = 1.5
 var escopeta_bullet_texture = preload("res://assets/cartucho_escopeta.png")
+var escopeta_bullet_texture_used = preload("res://assets/cartucho_escopeta_vacia.png")
 ####REVOVLER
 @export var max_revolver_ammo:int = 6
 @onready var current_revolver_ammo = max_revolver_ammo
 @export var revolver_reload_time:float = 2.0
 var revolver_bullet_texture = preload("res://assets/bala_revolver.png")
+var revolver_bullet_texture_used = preload("res://assets/bala_revolver_vacia.png")
 
 @onready var is_reloading:bool = false
 
 
-
 func _ready():
-	# Guardamos todas las armas en el slot
 	update_ammo_display()
 	weapon_list = weapon_slot.get_children()
 	print(weapon_list)
@@ -96,8 +97,11 @@ func shoot_current_weapon(direction: Vector2):
 func start_reload_revolver():
 	if current_revolver_ammo < max_revolver_ammo and not is_reloading:
 		is_reloading = true
-		print("Recargando revolver...")
-		await get_tree().create_timer(revolver_reload_time).timeout
+		show_reload_bar(revolver_reload_time)
+		print("Recargando revolver...")		
+		var timer = get_tree().create_timer(revolver_reload_time)
+		show_reload_bar(revolver_reload_time)
+		await timer.timeout		
 		current_revolver_ammo = max_revolver_ammo
 		is_reloading = false
 		print("Recarga completa. Balas: ", current_revolver_ammo)
@@ -105,9 +109,11 @@ func start_reload_revolver():
 
 func start_reload_escopeta():
 	if current_escopeta_ammo < max_escopeta_ammo and not is_reloading:
-		is_reloading = true
+		is_reloading = true		
 		print("Recargando escopeta...")
-		await get_tree().create_timer(escopeta_reload_time).timeout
+		var timer = get_tree().create_timer(escopeta_reload_time)
+		show_reload_bar(escopeta_reload_time)
+		await timer.timeout		
 		current_escopeta_ammo = max_escopeta_ammo
 		is_reloading = false
 		print("Recarga completa. Balas: ", current_escopeta_ammo)
@@ -137,3 +143,16 @@ func update_ammo_display():
 		bullet_rect.texture = bullet_texture
 		bullet_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED  # Ajusta según el diseño deseado
 		hbox.add_child(bullet_rect)
+		
+func show_reload_bar(duration: float):
+	progress_bar.visible = true
+	progress_bar.max_value = 100
+	progress_bar.value = 0
+	var time_passed := 0.0
+	while time_passed < duration:
+		await get_tree().process_frame
+		time_passed += get_process_delta_time()		
+		var percentage := (time_passed / duration) * 100.0
+		progress_bar.value = clamp(percentage, 0, 100)
+	progress_bar.value = 100
+	progress_bar.visible = false
