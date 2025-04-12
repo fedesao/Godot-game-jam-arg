@@ -32,6 +32,9 @@ var chanchoDmg:int = 35
 
 func efecto_muerte(enemigo: CharacterBody2D):
 	# Desactivar colisiones y lógica del enemigo
+	if not is_instance_valid(enemigo) or enemigo.is_queued_for_deletion():
+		return
+	
 	enemigo.set_process(false)
 	enemigo.set_physics_process(false)
 	
@@ -52,5 +55,5 @@ func efecto_muerte(enemigo: CharacterBody2D):
 	# Eliminar el nodo al terminar animación
 	await tween.finished
 	
-	if not enemigo.is_queued_for_deletion(): # Pongo esto porque cuando se mata a uno con escopeta, los proyectiles que quedan crashean el juego.
+	if is_instance_valid(enemigo) and not enemigo.is_queued_for_deletion(): # Pongo esto porque cuando se mata a uno con escopeta, los proyectiles que quedan crashean el juego.
 		enemigo.queue_free()
