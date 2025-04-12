@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
-@export var vida = 100
+@export var vida = Global.chancho_lata_vida
+@onready var vidaActual = vida
 @export var speed_normal = 50
 @export var speed_embestida = 300
 @export var distancia_deteccion = 200
@@ -15,6 +16,7 @@ var direccion_embestida = Vector2.ZERO
 var timer = 0.0
 var posicion_inicio_embestida = Vector2.ZERO # Calcula la distancia recorrida
 signal enemigo_muere
+@onready var barraVida = $ProgressBar
 
 func _ready():
 	player = get_node("../Player")
@@ -23,64 +25,53 @@ func _ready():
 func _physics_process(delta):
 	match estado:
 		"perseguir":
-			print("en persecución")
 			var direction = global_position.direction_to(player.global_position)
-			velocity = direction * speed_normal
-			
+			velocity = direction * speed_normal			
 			# Si está cerca, embiste
 			if global_position.distance_to(player.global_position) < distancia_deteccion:
 				estado = "preparar_embestida"
 				timer = tiempo_preparacion
 				# Guardar dirección hacia el player para embestida
-				direccion_embestida = direction
-				
+				direccion_embestida = direction				
 		"preparar_embestida":
-			print("preparando embestida!")
 			velocity = Vector2.ZERO
 			timer -= delta
 			if timer <= 0:
 				estado = "embestida"
 				timer = duracion_maxima_embestida
 				posicion_inicio_embestida = global_position
-				# Acá podrían ir efectos de sonido
-				
-				
+				# Acá podrían ir efectos de sonido				
 		"embestida":
-			print("embestida!")
 			velocity = direccion_embestida * speed_embestida
 			# Detectar si chocó contra pared
 			if is_on_wall():
 				estado = "aturdido"
 				timer = tiempo_recuperacion
-				return
-				
+				return				
 			# Por límite de tiempo
 			timer -= delta
 			if timer <= 0:
-				print("Corrió mucho tiempo!")
 				estado = "perseguir"
-				return
-				
+				return				
 			# Por límite de distancia
 			var distancia_recorrida = global_position.distance_to(posicion_inicio_embestida)
 			if distancia_recorrida >= distancia_maxima_embestida:
-				print("Se fue muy lejos!")
 				estado = "perseguir"
-				return
-			
+				return			
 		"aturdido":
-			print("Ha chocado! Aturdido!")
 			velocity = Vector2.ZERO
 			timer -= delta
 			if timer <= 0:
 				estado = "perseguir"
-
 	move_and_slide()
+	barraVida.max_value = vida
+	barraVida.value = vidaActual
 
 func take_damage(dmgDone):
-	vida -= dmgDone
-	print("recibio daño")
-	if vida <= 0:
+	vidaActual -= dmgDone
+	print(" chancho =recibio daño")
+	barraVida.value = vidaActual
+	if vidaActual <= 0:
 		enemigo_muere.emit()
 		queue_free()
 

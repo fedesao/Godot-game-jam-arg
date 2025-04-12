@@ -1,17 +1,22 @@
 extends Camera2D
+# En el script del Camera2D
+var shake_strength = 0.0
+var shake_decay = 5.0
+var original_position = Vector2.ZERO
 
-var shake_strength: float = 0.0
-var shake_decay: float = 5.0
+func _ready():
+	original_position = position
 
 func _process(delta):
 	if shake_strength > 0:
-		offset = Vector2(
-			randf_range(-1, 1),
-			randf_range(-1, 1)
+		var offset = Vector2(
+			randf_range(-1.0, 1.0),
+			randf_range(-1.0, 1.0)
 		) * shake_strength
-		shake_strength = lerp(shake_strength, 0.0, delta * shake_decay)
+		position = original_position + offset
+		shake_strength = lerp(shake_strength, 0.0, shake_decay * delta)
 	else:
-		offset = Vector2.ZERO
+		position = original_position
 
-func shake(intensidad: float):
-	shake_strength = intensidad
+func start_camera_shake(strength: float):
+	shake_strength = strength
