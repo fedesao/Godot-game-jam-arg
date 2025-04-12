@@ -9,7 +9,6 @@ extends CharacterBody2D
 @export var tiempo_recuperacion = 1.0
 @export var duracion_maxima_embestida = 2.0
 @export var distancia_maxima_embestida = 400
-@onready var dmgTimer = %DmgTimer
 var player_ref: Node = null
 var dmg = Global.chanchoDmg
 

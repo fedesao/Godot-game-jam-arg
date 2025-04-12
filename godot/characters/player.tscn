@@ -227,6 +227,7 @@ offset_top = 52.0
 offset_right = 116.0
 offset_bottom = 75.0
 theme = ExtResource("6_eus45")
+theme_override_font_sizes/font_size = 31
 text = "Enemigos Purgados"
 
 [node name="Camera2D" type="Camera2D" parent="."]

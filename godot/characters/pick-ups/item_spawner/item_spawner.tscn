@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxmp3r010exox"]
+
+[ext_resource type="Script" uid="uid://c33cw3irkdcbd" path="res://characters/pick-ups/item_spawner/item_spawner.gd" id="1_2xryo"]
+[ext_resource type="PackedScene" uid="uid://dka6o46g3f6bs" path="res://characters/pick-ups/balas/balas_revolver.tscn" id="2_bpya4"]
+[ext_resource type="PackedScene" uid="uid://cix3yh4nh6ml4" path="res://characters/pick-ups/balas/balas_escopeta.tscn" id="3_vwinj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_flvfi"]
+radius = 245.351
+
+[node name="ItemSpawner" type="Area2D"]
+script = ExtResource("1_2xryo")
+balas_revolver = ExtResource("2_bpya4")
+balas_escopeta = ExtResource("3_vwinj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(636, 355)
+shape = SubResource("CircleShape2D_flvfi")
+
+[node name="spawn_timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="spawn_timer" to="." method="_on_spawn_timer_timeout"]
