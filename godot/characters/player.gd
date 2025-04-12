@@ -37,13 +37,19 @@ var revolver_bullet_texture_used = preload("res://assets/bala_revolver_vacia.png
 @onready var barra_vida = %BarraVida
 
 ##DASH
-@export var dash_speed: float = 600.0
-@export var dash_duration: float = 0.15
-@export var dash_cooldown: float = 1.0
-var can_dash: bool = true
+
+@onready var dash_icon = $"CanvasLayer/Dash-icon"
+var dash_timer: float = 0.0
+var dash_cooldown: float = 3.0  # Tiempo de enfriamiento
+var dash_duration: float = 0.2  # Duración del dash
+var dash_speed: float = 300  # Velocidad del dash
 var is_dashing: bool = false
-var dash_direction: Vector2 = Vector2.ZERO
-@onready var dashIcon = $"CanvasLayer/Dash-icon"
+var can_dash: bool = true
+var dash_direction: Vector2 = Vector2.ZERO  # Dirección del dash
+
+
+
+
 
 
 func _ready():
@@ -55,6 +61,7 @@ func _ready():
 	barra_vida.max_value = life
 	$"CanvasLayer/icon-Revolver".visible = true
 	$"CanvasLayer/icon-Escopeta".visible = false
+
 
 func _physics_process(delta):
 	var input_vector = Vector2.ZERO
@@ -255,16 +262,19 @@ func agregar_municion(arma: String, cantidad: int):
 
 ###DASH
 func start_dash():
-	is_dashing = true
-	can_dash = false
-	impulso = dash_direction.normalized() * dash_speed
-	var dash_timer = get_tree().create_timer(dash_duration)
-	await dash_timer.timeout
-	is_dashing = false
-	# Enfriamiento
-	var cooldown_timer = get_tree().create_timer(dash_cooldown)
-	await cooldown_timer.timeout
-	can_dash = true
+	if can_dash:  # Solo ejecutar si se puede hacer el dash
+		is_dashing = true
+		can_dash = false
+		dash_icon.modulate.a = 0.0
+		impulso = dash_direction.normalized() * dash_speed
+		var dash_timer_instance = get_tree().create_timer(dash_duration)
+		await dash_timer_instance.timeout  # Esperar a que termine el dash
+		is_dashing = false		# Fin del dash
+		# Enfriamiento
+		var cooldown_timer_instance = get_tree().create_timer(dash_cooldown)
+		await cooldown_timer_instance.timeout  # Esperar el tiempo de cooldown
+		can_dash = true
+		dash_icon.modulate.a = 1.0
 	
 func update_damage_screen_effect():
 	var screen = %color_muerte
