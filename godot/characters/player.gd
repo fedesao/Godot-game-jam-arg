@@ -43,6 +43,7 @@ var revolver_bullet_texture_used = preload("res://assets/bala_revolver_vacia.png
 var can_dash: bool = true
 var is_dashing: bool = false
 var dash_direction: Vector2 = Vector2.ZERO
+@onready var dashIcon = $"CanvasLayer/Dash-icon"
 
 
 func _ready():
@@ -97,6 +98,12 @@ func _physics_process(delta):
 		dash_direction = input_vector
 		if dash_direction != Vector2.ZERO:
 			start_dash()
+	if Input.is_action_just_pressed("recargar"):
+		if not is_reloading:
+			if current_weapon_name == "revolver" and current_revolver_ammo < max_revolver_ammo and revolver_actual_ammo_held > 0:
+				start_reload_revolver()
+			elif current_weapon_name == "escopeta" and current_escopeta_ammo < max_escopeta_ammo and escopeta_actual_ammo_held > 0:
+				start_reload_escopeta()
 
 		
 #disparar arma seleccionado
@@ -106,7 +113,6 @@ func shoot_current_weapon(direction: Vector2):
 	if is_reloading:
 		print("¡Todavía recargando!")
 		return
-
 	match current_weapon_index:
 		0:  # Revolver
 			if current_revolver_ammo > 0:
@@ -229,10 +235,11 @@ func take_damage_player(dmgDone):
 	print(life)
 	if life <= 0:
 		player_muere.emit()
-		queue_free()
+		get_tree().change_scene_to_file("res://scenes/game_over/game_over.tscn")
 		
 func update_life():
 	barra_vida.value = life	
+	update_damage_screen_effect()
 	
 func aplicar_retroceso(direccion_disparo: Vector2, fuerza: float):
 	impulso = -direccion_disparo.normalized() * fuerza
@@ -258,3 +265,13 @@ func start_dash():
 	var cooldown_timer = get_tree().create_timer(dash_cooldown)
 	await cooldown_timer.timeout
 	can_dash = true
+	
+func update_damage_screen_effect():
+	var screen = %color_muerte
+	var base_alpha: float = clamp(1.0 - float(life) / float(Global.playerLife), 0.0, 0.7)
+	var color: Color = Color(1.0, 1.0 - base_alpha, 1.0 - base_alpha, base_alpha)
+	# Si la vida está críticamente baja, hacer parpadear
+	if life <= Global.playerLife * 0.2:
+		var pulse := sin(Time.get_ticks_msec() / 100.0) * 0.2
+		color.a = clamp(base_alpha + pulse, 0.0, 1.0)
+	screen.modulate = color

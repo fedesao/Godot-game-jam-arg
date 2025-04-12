@@ -9,11 +9,11 @@ func _ready():
 
 func _process(delta):
 	if shake_strength > 0:
-		var offset = Vector2(
+		var offset1 = Vector2(
 			randf_range(-1.0, 1.0),
 			randf_range(-1.0, 1.0)
 		) * shake_strength
-		position = original_position + offset
+		position = original_position + offset1
 		shake_strength = lerp(shake_strength, 0.0, shake_decay * delta)
 	else:
 		position = original_position

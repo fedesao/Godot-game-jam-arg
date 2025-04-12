@@ -69,14 +69,12 @@ func _on_area_detection_area_entered(area):
 		intentar_esquivar(direccion_proyectil)
 
 func take_damage(dmgDone):
-	var direction = player.global_position.direction_to(global_position)
-	
+	var direction = player.global_position.direction_to(global_position)	
 	if not esquivando: # Intenta esquivar si no está esquivando ya
 		intentar_esquivar(direction)
 	vidaActual -= dmgDone # Para aplicar el daño sin importar la esquiva
 	print("recibio daño: ", vida)
-	barraVida.value = vidaActual
-	
+	barraVida.value = vidaActual	
 	if vidaActual <= 0:
 		print("Lobezno ha muerto!")
 		enemigo_muere.emit()

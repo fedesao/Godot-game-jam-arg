@@ -6,7 +6,7 @@
 size = Vector2(34, 26)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y4n1f"]
-radius = 20.0
+radius = 16.0
 
 [node name="familiar" type="CharacterBody2D" groups=["enemigos"]]
 collision_layer = 2

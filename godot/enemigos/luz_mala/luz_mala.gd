@@ -1,8 +1,12 @@
 extends CharacterBody2D
 
-@export var vida: int = 80
+#GLOBALES
+@export var vida = Global.luz_mala_vida
+var dmg = Global.luz_mala_dmg
+@export var speed = Global.luz_mala_speed
 @onready var vidaActual = vida
-@export var speed: float = 70
+
+
 @export var tiempo_entre_teleport: float = 4.0
 @export var distancia_teleport_min: float = 200
 @export var distancia_teleport_max: float = 400
@@ -11,7 +15,7 @@ extends CharacterBody2D
 @export var max_intentos_teleport: int = 10  # Intentos máximos para encontrar posición válida
 @onready var dmgTimer = %DmgTimer
 @onready var barraVida = $ProgressBar
-var dmg = Global.luz_mala_dmg
+
 var player_ref: Node = null
 var player
 var luz
@@ -136,15 +140,13 @@ func spawn_rastro_fantasmal(pos: Vector2):
 func take_damage(dmgDone):
 	vidaActual -= dmgDone
 	barraVida.value = vidaActual
-	print("Teleportador recibió daño: ", dmgDone, " - Vida: ", vida)
-	
+	print("Teleportador recibió daño: ", dmgDone, " - Vida: ", vida)	
 	# Teleport inmediato al recibir daño
 	if vidaActual <= 0 and estado == "perseguir" and rng.randf() < 0.3:
 		print("Escape de emergencia!")	
 	if vidaActual <= 0:
 		enemigo_muere.emit()
 		Global.efecto_muerte(self)
-
 
 func _on_enemigo_muere() -> void:
 	Global.puntaje += 1

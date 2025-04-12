@@ -251,3 +251,11 @@ position = Vector2(87, 0)
 [node name="ShootTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
+
+[node name="color_muerte" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_left = -785.0
+offset_top = -421.0
+offset_right = 825.0
+offset_bottom = 461.0
+color = Color(0.0196078, 0.0196078, 0.0196078, 1)
