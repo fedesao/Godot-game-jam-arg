@@ -21,6 +21,7 @@ polygon = PackedVector2Array(656, 240, 832, 244, 831, 273, 787, 271, 786, 457, 8
 [node name="MainLevel" type="Node2D"]
 
 [node name="Map" type="Node2D" parent="."]
+z_index = -1
 
 [node name="Sprite2D" type="Sprite2D" parent="Map"]
 position = Vector2(443, 599)

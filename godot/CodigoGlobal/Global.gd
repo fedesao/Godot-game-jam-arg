@@ -35,6 +35,10 @@ var luz_mala_vida:int = 80
 var luz_mala_speed:float = 70
 
 func efecto_muerte(enemigo: CharacterBody2D):
+	# Crear rastro para la sangre
+	var rastro_original_pos: Vector2
+	rastro_original_pos = enemigo.global_position
+	
 	# Desactivar colisiones y lógica del enemigo
 	enemigo.set_process(false)
 	enemigo.set_physics_process(false)	
@@ -53,3 +57,10 @@ func efecto_muerte(enemigo: CharacterBody2D):
 	#REVISAR!!!!s
 	if not enemigo.is_queued_for_deletion(): # Pongo esto porque cuando se mata a uno con escopeta, los proyectiles que quedan crashean el juego.
 		enemigo.queue_free()
+	spawn_rastro_sangre(rastro_original_pos)
+
+func spawn_rastro_sangre(pos: Vector2):
+	var rastro_scene = load("res://enemigos/onDeath/charcho_sangre.tscn")
+	var rastro = rastro_scene.instantiate()
+	rastro.global_position = pos
+	get_parent().add_child(rastro)
