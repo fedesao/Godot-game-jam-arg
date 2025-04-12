@@ -57,7 +57,6 @@ show_percentage = false
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(50, 0)
-rotation = 0.14035
 
 [connection signal="enemigo_muere" from="." to="." method="_on_enemigo_muere"]
 [connection signal="area_entered" from="ProyectilDetector" to="." method="_on_area_detection_area_entered"]

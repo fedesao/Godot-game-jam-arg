@@ -4,10 +4,15 @@ extends CharacterBody2D
 @onready var vidaActual = vida
 @export var vida = 100
 @export var speed = 50
-@export var prob_esquivar = 0.4
+@export var prob_esquivar = 0.2
 @export var duracion_esquive = 1
 @export var velocidad_esquive = 50
 @onready var barraVida = $ProgressBar
+@onready var sprite = $ElFamiliarConceptArt
+@onready var marker = $Marker2D
+@onready var col_shape = $CollisionShape2D
+
+
 var player
 var esquivando = false
 var direccion_esquive = Vector2.ZERO
@@ -18,8 +23,13 @@ func _ready():
 	player = get_node("../Player")
 	timer_esquive = 0.0
 
-
 func _physics_process(delta):
+	var direction = global_position.direction_to(player.global_position) # Calcular dirección
+	var angle = direction.angle() # Calcular ángulo
+	sprite.rotation = angle
+	marker.rotation = angle
+	col_shape.rotation = angle + deg_to_rad(90)
+	
 	if esquivando:
 		velocity = direccion_esquive * speed * velocidad_esquive
 		timer_esquive -= delta
@@ -27,7 +37,6 @@ func _physics_process(delta):
 			esquivando = false
 			print("Terminó la esquiva")
 	else:
-		var direction = global_position.direction_to(player.global_position)
 		velocity = direction * speed
 		
 	move_and_slide()
