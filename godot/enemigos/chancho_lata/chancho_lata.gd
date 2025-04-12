@@ -83,7 +83,7 @@ func take_damage(dmgDone):
 	barraVida.value = vidaActual
 	if vidaActual <= 0:
 		enemigo_muere.emit()
-		queue_free()
+		Global.efecto_muerte(self)
 
 
 func _on_enemigo_muere() -> void:

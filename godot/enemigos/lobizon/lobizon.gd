@@ -80,7 +80,7 @@ func take_damage(dmgDone):
 	if vidaActual <= 0:
 		print("Lobezno ha muerto!")
 		enemigo_muere.emit()
-		queue_free()
+		Global.efecto_muerte(self)
 				
 func _on_enemigo_muere() -> void:
 	Global.puntaje += 1

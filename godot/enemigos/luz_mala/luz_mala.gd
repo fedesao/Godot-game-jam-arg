@@ -143,7 +143,7 @@ func take_damage(dmgDone):
 		print("Escape de emergencia!")	
 	if vidaActual <= 0:
 		enemigo_muere.emit()
-		queue_free()
+		Global.efecto_muerte(self)
 
 
 func _on_enemigo_muere() -> void:
