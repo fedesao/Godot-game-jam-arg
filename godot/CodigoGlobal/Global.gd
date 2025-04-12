@@ -34,6 +34,12 @@ var luz_mala_dmg:int = 45
 var luz_mala_vida:int = 80
 var luz_mala_speed:float = 70
 
+var lobizon_dmg:int = 20
+var lobizon_speed:int = 50
+var lobizon_vida:int = 50
+
+
+###FUNCIONES
 func efecto_muerte(enemigo: CharacterBody2D):
 	# Crear rastro para la sangre
 	var rastro_original_pos: Vector2

@@ -51,11 +51,6 @@ collision_layer = 2
 position = Vector2(2, -2)
 shape = SubResource("CircleShape2D_hvpsa")
 
-[node name="DmgTimer" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 0.8
-
 [connection signal="enemigo_muere" from="." to="." method="_on_enemigo_muere"]
 [connection signal="body_entered" from="area_dmg_player" to="." method="_on_area_dmg_player_body_entered"]
 [connection signal="body_exited" from="area_dmg_player" to="." method="_on_area_dmg_player_body_exited"]
-[connection signal="timeout" from="DmgTimer" to="." method="_on_dmg_timer_timeout"]

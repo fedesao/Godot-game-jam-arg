@@ -1,9 +1,12 @@
 extends CharacterBody2D
 
-
+#GLOBALES
+@onready var vida = Global.lobizon_vida
+@onready var speed = Global.lobizon_speed
+@onready var dmg = Global.lobizon_dmg
 @onready var vidaActual = vida
-@export var vida = 100
-@export var speed = 50
+
+#LOCALES
 @export var prob_esquivar = 0.2
 @export var duracion_esquive = 1
 @export var velocidad_esquive = 50
@@ -82,3 +85,9 @@ func take_damage(dmgDone):
 				
 func _on_enemigo_muere() -> void:
 	Global.puntaje += 1
+
+
+func _on_proyectil_detector_body_entered(body: Node2D) -> void:
+	if body.has_method("take_damage_player"):
+		body.take_damage_player(dmg)
+		print("chancho dmg to player")

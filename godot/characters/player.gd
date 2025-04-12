@@ -259,6 +259,12 @@ func agregar_municion(arma: String, cantidad: int):
 		escopeta_actual_ammo_held = min(escopeta_actual_ammo_held + cantidad, escopeta_max_ammo_held)
 		print("Recogiste balas de escopeta. Total ahora: ", escopeta_actual_ammo_held)
 	update_ammo_display()
+	
+##RECUPERAR VIDA
+func recuperar_vida(cantidad:int):
+	life += cantidad
+	update_life()
+	
 
 ###DASH
 func start_dash():

@@ -58,3 +58,4 @@ position = Vector2(50, 0)
 
 [connection signal="enemigo_muere" from="." to="." method="_on_enemigo_muere"]
 [connection signal="area_entered" from="ProyectilDetector" to="." method="_on_area_detection_area_entered"]
+[connection signal="body_entered" from="ProyectilDetector" to="." method="_on_proyectil_detector_body_entered"]
