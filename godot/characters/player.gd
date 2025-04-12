@@ -200,8 +200,8 @@ func update_ammo_display():
 		bullet_rect.custom_minimum_size = Vector2(200, 0)  # Aumentar
 		hbox.add_child(bullet_rect)
 	# Actualizar los labels de texto
-	$CanvasLayer/balasRevolver.text = str(current_revolver_ammo) + "/" + str(revolver_actual_ammo_held)
-	$CanvasLayer/balasEscopeta.text = str(current_escopeta_ammo) + "/" + str(escopeta_actual_ammo_held)
+	$CanvasLayer/balasRevolver.text = str(current_revolver_ammo) + " de " + str(revolver_actual_ammo_held)
+	$CanvasLayer/balasEscopeta.text = str(current_escopeta_ammo) + " de " + str(escopeta_actual_ammo_held)
 
 		
 		

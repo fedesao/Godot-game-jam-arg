@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c4m6khe7g8laj"]
+
+[ext_resource type="FontFile" uid="uid://b8aoxhdm0lb66" path="res://fonts/HeadlinerNo.45 DEMO.ttf" id="1_go5d2"]
+
+[resource]
+Label/font_sizes/font_size = 24
+Label/fonts/font = ExtResource("1_go5d2")

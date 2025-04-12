@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dsw4i7jsr1ank"]
+[gd_scene load_steps=23 format=3 uid="uid://dsw4i7jsr1ank"]
 
 [ext_resource type="Script" uid="uid://cio4jt3snka3a" path="res://characters/player.gd" id="1_dnjla"]
 [ext_resource type="PackedScene" uid="uid://cinqt7u3thb8x" path="res://characters/arma_1/proyectil_1.tscn" id="2_3eadt"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://8b6nhkdm1grq" path="res://characters/HUD.gd" id="5_j31ep"]
 [ext_resource type="Script" uid="uid://c4q4oc5k2dwcr" path="res://characters/camera_2d.gd" id="6_6t23p"]
 [ext_resource type="Texture2D" uid="uid://dmxmsqw12qmic" path="res://assets/armas/BalaEscopeta1.png" id="6_eho78"]
+[ext_resource type="Theme" uid="uid://c4m6khe7g8laj" path="res://ui/textos.tres" id="6_eus45"]
 [ext_resource type="PackedScene" uid="uid://bnc8jhogm34ob" path="res://characters/arma_1/revolver.tscn" id="6_h1q25"]
 [ext_resource type="Texture2D" uid="uid://ch4nkvhahqa1r" path="res://assets/armas/BalaRevolver.png" id="7_8sqrr"]
 [ext_resource type="Texture2D" uid="uid://c2xst5wtkpsw0" path="res://assets/dash-icon.png" id="8_eho78"]
@@ -166,6 +167,7 @@ offset_left = 41.0
 offset_top = 584.0
 offset_right = 81.0
 offset_bottom = 607.0
+theme = ExtResource("6_eus45")
 text = "Vida"
 
 [node name="balasRevolver" type="Label" parent="CanvasLayer"]
@@ -173,6 +175,7 @@ offset_left = 247.0
 offset_top = 593.0
 offset_right = 356.0
 offset_bottom = 616.0
+theme = ExtResource("6_eus45")
 text = "balas revolver"
 
 [node name="balasEscopeta" type="Label" parent="CanvasLayer"]
@@ -180,6 +183,7 @@ offset_left = 244.0
 offset_top = 633.0
 offset_right = 368.0
 offset_bottom = 682.0
+theme = ExtResource("6_eus45")
 text = "balas escopeta
 "
 
