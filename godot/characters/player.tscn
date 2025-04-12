@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dsw4i7jsr1ank"]
+[gd_scene load_steps=22 format=3 uid="uid://dsw4i7jsr1ank"]
 
 [ext_resource type="Script" uid="uid://cio4jt3snka3a" path="res://characters/player.gd" id="1_dnjla"]
 [ext_resource type="PackedScene" uid="uid://cinqt7u3thb8x" path="res://characters/arma_1/proyectil_1.tscn" id="2_3eadt"]
@@ -7,10 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://dmmsr1jg6ygje" path="res://characters/arma_2/escopeta.tscn" id="5_evndh"]
 [ext_resource type="Script" uid="uid://8b6nhkdm1grq" path="res://characters/HUD.gd" id="5_j31ep"]
 [ext_resource type="Script" uid="uid://c4q4oc5k2dwcr" path="res://characters/camera_2d.gd" id="6_6t23p"]
+[ext_resource type="Texture2D" uid="uid://dmxmsqw12qmic" path="res://assets/armas/BalaEscopeta1.png" id="6_eho78"]
 [ext_resource type="PackedScene" uid="uid://bnc8jhogm34ob" path="res://characters/arma_1/revolver.tscn" id="6_h1q25"]
-[ext_resource type="Texture2D" uid="uid://cn0xin7am7tl1" path="res://assets/cartucho_escopeta.png" id="6_q605b"]
-[ext_resource type="Texture2D" uid="uid://cxmeab7354m6y" path="res://assets/bala_revolver.png" id="7_eho78"]
+[ext_resource type="Texture2D" uid="uid://ch4nkvhahqa1r" path="res://assets/armas/BalaRevolver.png" id="7_8sqrr"]
 [ext_resource type="Texture2D" uid="uid://c2xst5wtkpsw0" path="res://assets/dash-icon.png" id="8_eho78"]
+[ext_resource type="Texture2D" uid="uid://pjtgmbjd2788" path="res://assets/armas/Escopeta.png" id="12_6rrl0"]
+[ext_resource type="Texture2D" uid="uid://bjxmwog5kbtud" path="res://assets/armas/RevolverTambor.png" id="13_eus45"]
 
 [sub_resource type="Gradient" id="Gradient_hlbhx"]
 offsets = PackedFloat32Array(0, 0.675325)
@@ -48,7 +50,7 @@ radius = 28.0
 bg_color = Color(0.701961, 0.109804, 0.180392, 1)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-position = Vector2(401, 301)
+position = Vector2(640, 361)
 collision_mask = 27
 motion_mode = 1
 script = ExtResource("1_dnjla")
@@ -132,7 +134,7 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 45.0
 offset_top = -94.0
-offset_right = 256.0
+offset_right = 453.0
 offset_bottom = 200.0
 grow_vertical = 0
 scale = Vector2(0.12, 0.12)
@@ -182,25 +184,36 @@ text = "balas escopeta
 "
 
 [node name="TextureRect2" type="TextureRect" parent="CanvasLayer"]
-offset_left = 219.0
+offset_left = 224.0
 offset_top = 630.0
-offset_right = 430.0
+offset_right = 364.0
 offset_bottom = 924.0
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("6_q605b")
+texture = ExtResource("6_eho78")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-offset_left = 219.0
-offset_top = 590.0
-offset_right = 430.0
-offset_bottom = 884.0
+offset_left = 225.0
+offset_top = 591.0
+offset_right = 355.0
+offset_bottom = 885.0
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("7_eho78")
+texture = ExtResource("7_8sqrr")
 
 [node name="Dash-icon" type="Sprite2D" parent="CanvasLayer"]
 position = Vector2(401, 624)
 scale = Vector2(0.273504, 0.273504)
 texture = ExtResource("8_eho78")
+
+[node name="icon-Escopeta" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(187, 693)
+rotation = -0.509837
+scale = Vector2(0.109785, 0.109785)
+texture = ExtResource("12_6rrl0")
+
+[node name="icon-Revolver" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(79, 692)
+scale = Vector2(0.088773, 0.088773)
+texture = ExtResource("13_eus45")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true

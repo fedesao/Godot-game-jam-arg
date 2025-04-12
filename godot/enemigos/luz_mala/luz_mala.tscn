@@ -1,8 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dyuqo18jfehoc"]
+[gd_scene load_steps=9 format=3 uid="uid://dyuqo18jfehoc"]
 
 [ext_resource type="Script" uid="uid://r3fdrcb1s068" path="res://enemigos/luz_mala/luz_mala.gd" id="1_hlbhx"]
 [ext_resource type="Texture2D" uid="uid://yok71wcabaso" path="res://assets/enemigos/la luz mala 1.png" id="2_mdlxf"]
 [ext_resource type="Texture2D" uid="uid://donatcypad0pd" path="res://assets/enemigos/la luz mala efectos.png" id="3_88sac"]
+[ext_resource type="Texture2D" uid="uid://ck1kkhtjpo5hw" path="res://assets/enemigos/solo efectos.png" id="4_mhxxn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mhxxn"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mhxxn"]
 animations = [{
@@ -12,6 +15,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("3_88sac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_mhxxn")
 }],
 "loop": true,
 "name": &"default",
@@ -27,19 +33,24 @@ gradient = SubResource("Gradient_hlbhx")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_mhxxn"]
-
 [node name="Enemigo1" type="CharacterBody2D" groups=["enemigos"]]
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_hlbhx")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+scale = Vector2(2.23838, 2.23838)
+shape = SubResource("CircleShape2D_mhxxn")
+
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." groups=["enemigos"]]
-position = Vector2(4, 7.62939e-06)
+position = Vector2(1, 7)
+rotation = -6.28319
 scale = Vector2(0.0685185, 0.0685185)
 sprite_frames = SubResource("SpriteFrames_mhxxn")
 autoplay = "default"
-frame_progress = 0.326528
+frame = 2
+frame_progress = 0.754193
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 scale = Vector2(5, 5)
@@ -48,10 +59,6 @@ range_item_cull_mask = 9
 shadow_enabled = true
 shadow_item_cull_mask = 9
 texture = SubResource("GradientTexture2D_mdlxf")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(2.23838, 2.23838)
-shape = SubResource("CircleShape2D_mhxxn")
 
 [node name="Label" type="Label" parent="."]
 offset_left = -25.0

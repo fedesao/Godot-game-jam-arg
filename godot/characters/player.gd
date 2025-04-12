@@ -21,7 +21,7 @@ var escopeta_actual_ammo_held = Global.escopeta_actual_ammo_held
 @export var max_escopeta_ammo:int = 2
 @onready var current_escopeta_ammo = max_escopeta_ammo
 @export var escopeta_reload_time:float = 1.5
-var escopeta_bullet_texture = preload("res://assets/cartucho_escopeta.png")
+var escopeta_bullet_texture = preload("res://assets/armas/BalaEscopeta1.png")
 var escopeta_bullet_texture_used = preload("res://assets/cartucho_escopeta_vacia.png")
 ####REVOVLER
 var revolver_max_ammo_held = Global.revolver_max_ammo_held
@@ -29,7 +29,7 @@ var revolver_actual_ammo_held = Global.revolver_actual_ammo_held
 @export var max_revolver_ammo:int = 6
 @onready var current_revolver_ammo = max_revolver_ammo
 @export var revolver_reload_time:float = 2.0
-var revolver_bullet_texture = preload("res://assets/bala_revolver.png")
+var revolver_bullet_texture = preload("res://assets/armas/BalaRevolver.png")
 var revolver_bullet_texture_used = preload("res://assets/bala_revolver_vacia.png")
 
 @onready var is_reloading:bool = false
@@ -51,6 +51,8 @@ func _ready():
 	if weapon_list.size() > 0:
 		select_weapon(0)
 	barra_vida.max_value = life
+	$"CanvasLayer/icon-Revolver".visible = true
+	$"CanvasLayer/icon-Escopeta".visible = false
 
 func _physics_process(delta):
 	var input_vector = Vector2.ZERO
@@ -71,12 +73,16 @@ func _physics_process(delta):
 		shootTimer.stop()
 		current_weapon_name = "revolver"
 		update_ammo_display()
+		$"CanvasLayer/icon-Revolver".visible = true
+		$"CanvasLayer/icon-Escopeta".visible = false
 	elif Input.is_action_just_pressed("arma2"):
 		select_weapon(1)
 		shootTimer.stop()
 		print("arma 2 escopeta")
 		current_weapon_name = "escopeta"
 		update_ammo_display()
+		$"CanvasLayer/icon-Revolver".visible = false
+		$"CanvasLayer/icon-Escopeta".visible = true
 	elif Input.is_action_just_pressed("arma3"):
 		select_weapon(2)
 		shootTimer.stop()
@@ -191,6 +197,7 @@ func update_ammo_display():
 		var bullet_rect = TextureRect.new()
 		bullet_rect.texture = bullet_texture
 		bullet_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		bullet_rect.custom_minimum_size = Vector2(200, 0)  # Aumentar
 		hbox.add_child(bullet_rect)
 	# Actualizar los labels de texto
 	$CanvasLayer/balasRevolver.text = str(current_revolver_ammo) + "/" + str(revolver_actual_ammo_held)
