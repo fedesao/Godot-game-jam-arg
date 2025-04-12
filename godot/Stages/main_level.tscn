@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://bhafahdpnw8ah"]
 
 [ext_resource type="PackedScene" uid="uid://dsw4i7jsr1ank" path="res://characters/player.tscn" id="1_uia1v"]
-[ext_resource type="PackedScene" uid="uid://8fdqdt6nitfv" path="res://enemigos/enemy_1/enemigo_1.tscn" id="2_c678c"]
+[ext_resource type="PackedScene" uid="uid://8fdqdt6nitfv" path="res://enemigos/enemy_1/enemigo_basico.tscn" id="2_c678c"]
 [ext_resource type="Texture2D" uid="uid://cqiri1cddkju4" path="res://light/assets/14622749380557.560858d24a85e.png" id="3_sjey7"]
 [ext_resource type="PackedScene" uid="uid://d32f265ddxdj3" path="res://enemigos/chancho_lata/chancho_lata.tscn" id="4_h02h0"]
 [ext_resource type="PackedScene" uid="uid://bqikuv73psgo0" path="res://enemigos/lobizon/lobizon.tscn" id="5_5pv5t"]
@@ -66,22 +66,22 @@ occluder_light_mask = 8
 color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_uia1v")]
-position = Vector2(100, 338)
+position = Vector2(177, 431)
 
 [node name="Enemigo1" parent="." instance=ExtResource("2_c678c")]
-position = Vector2(487, 163)
+position = Vector2(489, 169)
 
 [node name="ChanchoLata" parent="." instance=ExtResource("4_h02h0")]
 position = Vector2(621, 527)
 
 [node name="Lobizon" parent="." instance=ExtResource("5_5pv5t")]
-position = Vector2(1100, 280)
+position = Vector2(952, 168)
 
 [node name="Enemigo2" parent="." instance=ExtResource("6_qw25s")]
-position = Vector2(363, 750)
+position = Vector2(267, 785)
 
 [node name="BalasRevolver" parent="." instance=ExtResource("6_idl2b")]
-position = Vector2(489, 389)
+position = Vector2(692, 356)
 
 [node name="BalasEscopeta" parent="." instance=ExtResource("8_idl2b")]
-position = Vector2(826, 393)
+position = Vector2(940, 434)

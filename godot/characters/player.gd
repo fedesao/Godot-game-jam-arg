@@ -215,6 +215,7 @@ func show_reload_bar(duration: float):
 ###RECIBIR DAÑO
 func take_damage_player(dmgDone):
 	life -= dmgDone
+	update_life()
 	print(" player recibio daño")
 	print(life)
 	if life <= 0:

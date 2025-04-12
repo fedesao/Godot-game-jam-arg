@@ -1,15 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://dyuqo18jfehoc"]
+[gd_scene load_steps=8 format=3 uid="uid://dyuqo18jfehoc"]
 
 [ext_resource type="Script" uid="uid://r3fdrcb1s068" path="res://enemigos/luz_mala/luz_mala.gd" id="1_hlbhx"]
+[ext_resource type="Texture2D" uid="uid://yok71wcabaso" path="res://assets/enemigos/la luz mala 1.png" id="2_mdlxf"]
+[ext_resource type="Texture2D" uid="uid://donatcypad0pd" path="res://assets/enemigos/la luz mala efectos.png" id="3_88sac"]
 
-[sub_resource type="Gradient" id="Gradient_mdlxf"]
-offsets = PackedFloat32Array(0, 0.616883)
-colors = PackedColorArray(1, 0, 0, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_88sac"]
-gradient = SubResource("Gradient_mdlxf")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
+[sub_resource type="SpriteFrames" id="SpriteFrames_mhxxn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mdlxf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_88sac")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
 
 [sub_resource type="Gradient" id="Gradient_hlbhx"]
 offsets = PackedFloat32Array(0, 0.675325)
@@ -27,8 +34,12 @@ collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_hlbhx")
 
-[node name="Sprite2D" type="Sprite2D" parent="." groups=["enemigos"]]
-texture = SubResource("GradientTexture2D_88sac")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." groups=["enemigos"]]
+position = Vector2(4, 7.62939e-06)
+scale = Vector2(0.0685185, 0.0685185)
+sprite_frames = SubResource("SpriteFrames_mhxxn")
+autoplay = "default"
+frame_progress = 0.326528
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 scale = Vector2(5, 5)

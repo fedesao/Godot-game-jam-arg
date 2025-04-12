@@ -6,15 +6,14 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_hm0pt"]
 radius = 24.0
 
-[sub_resource type="Gradient" id="Gradient_7mn1e"]
-offsets = PackedFloat32Array(0, 0.766234)
-colors = PackedColorArray(1, 1, 0.803922, 1, 0, 0, 0, 1)
+[sub_resource type="Gradient" id="Gradient_ex2fb"]
+offsets = PackedFloat32Array(0, 0.675325)
+colors = PackedColorArray(0.374722, 0.540378, 0.779853, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_7mn1e"]
-gradient = SubResource("Gradient_7mn1e")
+gradient = SubResource("Gradient_ex2fb")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 1)
 
 [node name="BalasEscopeta" type="Area2D"]
 collision_layer = 16
@@ -34,10 +33,9 @@ position = Vector2(-7, -1.624)
 scale = Vector2(0.166667, 0.166667)
 texture = ExtResource("2_7mn1e")
 
-[node name="PointLight2D2" type="PointLight2D" parent="."]
-light_mask = 8
-visibility_layer = 8
-scale = Vector2(4, 4)
+[node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(5, 5)
+energy = 3.0
 range_item_cull_mask = 9
 shadow_enabled = true
 shadow_item_cull_mask = 9

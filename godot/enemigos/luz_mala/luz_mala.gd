@@ -60,7 +60,7 @@ func _physics_process(delta):
 			timer_teleport -= delta
 			#var t = tiempo_preparacion - timer_teleport
 			#luz.energy = intensidad_base + sin(t * frecuencia) * amplitud
-			#get_viewport().get_camera_2d().shake(4.0)
+			get_viewport().get_camera_2d().start_camera_shake(20.0)
 			var t = Time.get_ticks_msec() / 1000.0
 			var pulso = sin(t * frecuencia * 3.0) * 0.5 + sin(t * frecuencia) * 0.5
 			luz.energy = luz_energy_original + pulso * amplitud * 1.5
