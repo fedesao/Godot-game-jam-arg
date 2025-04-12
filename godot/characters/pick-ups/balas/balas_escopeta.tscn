@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://cix3yh4nh6ml4"]
+
+[ext_resource type="Script" uid="uid://dhi3o7a217awn" path="res://characters/pick-ups/balas/balas_escopeta.gd" id="1_7mn1e"]
+[ext_resource type="Texture2D" uid="uid://cn0xin7am7tl1" path="res://assets/cartucho_escopeta.png" id="2_7mn1e"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hm0pt"]
+radius = 24.0
+
+[sub_resource type="Gradient" id="Gradient_7mn1e"]
+offsets = PackedFloat32Array(0, 0.766234)
+colors = PackedColorArray(1, 1, 0.803922, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7mn1e"]
+gradient = SubResource("Gradient_7mn1e")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[node name="BalasEscopeta" type="Area2D"]
+collision_layer = 16
+script = ExtResource("1_7mn1e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -2)
+shape = SubResource("CircleShape2D_hm0pt")
+
+[node name="CartuchoEscopeta2" type="Sprite2D" parent="."]
+position = Vector2(8, -1.624)
+scale = Vector2(0.167, 0.167)
+texture = ExtResource("2_7mn1e")
+
+[node name="CartuchoEscopeta" type="Sprite2D" parent="."]
+position = Vector2(-7, -1.624)
+scale = Vector2(0.166667, 0.166667)
+texture = ExtResource("2_7mn1e")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+light_mask = 8
+visibility_layer = 8
+scale = Vector2(4, 4)
+range_item_cull_mask = 9
+shadow_enabled = true
+shadow_item_cull_mask = 9
+texture = SubResource("GradientTexture2D_7mn1e")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

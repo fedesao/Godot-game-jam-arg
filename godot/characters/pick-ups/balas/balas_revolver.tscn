@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://dka6o46g3f6bs"]
+
+[ext_resource type="Script" uid="uid://cmp0l1doc6k7w" path="res://characters/pick-ups/balas/balas_revolver.gd" id="1_ex2fb"]
+[ext_resource type="Texture2D" uid="uid://cxmeab7354m6y" path="res://assets/bala_revolver.png" id="1_yi7pf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hm0pt"]
+radius = 20.0998
+
+[sub_resource type="Gradient" id="Gradient_h1q25"]
+offsets = PackedFloat32Array(0, 0.766234)
+colors = PackedColorArray(1, 1, 0.803922, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ex2fb"]
+gradient = SubResource("Gradient_h1q25")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[node name="BalasRevolver" type="Area2D"]
+collision_layer = 16
+script = ExtResource("1_ex2fb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -2)
+shape = SubResource("CircleShape2D_hm0pt")
+
+[node name="BalaRevolver" type="Sprite2D" parent="."]
+position = Vector2(-10.45, -2.3)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_yi7pf")
+
+[node name="BalaRevolver3" type="Sprite2D" parent="."]
+position = Vector2(9.55, -2.3)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_yi7pf")
+
+[node name="BalaRevolver2" type="Sprite2D" parent="."]
+position = Vector2(-0.449997, -2.3)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_yi7pf")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+light_mask = 8
+visibility_layer = 8
+scale = Vector2(4, 4)
+range_item_cull_mask = 9
+shadow_enabled = true
+shadow_item_cull_mask = 9
+texture = SubResource("GradientTexture2D_ex2fb")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
