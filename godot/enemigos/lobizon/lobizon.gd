@@ -1,11 +1,13 @@
 extends CharacterBody2D
 
+
+@onready var vidaActual = vida
 @export var vida = 100
 @export var speed = 50
 @export var prob_esquivar = 0.4
 @export var duracion_esquive = 1
 @export var velocidad_esquive = 50
-
+@onready var barraVida = $ProgressBar
 var player
 var esquivando = false
 var direccion_esquive = Vector2.ZERO
@@ -15,6 +17,7 @@ signal enemigo_muere
 func _ready():
 	player = get_node("../Player")
 	timer_esquive = 0.0
+
 
 func _physics_process(delta):
 	if esquivando:
@@ -28,6 +31,8 @@ func _physics_process(delta):
 		velocity = direction * speed
 		
 	move_and_slide()
+	barraVida.max_value = vida#ACTUALIZAR VIDA
+	barraVida.value = vidaActual
 	
 func intentar_esquivar(direccion_proyectil):
 	if esquivando:
@@ -59,10 +64,11 @@ func take_damage(dmgDone):
 	
 	if not esquivando: # Intenta esquivar si no está esquivando ya
 		intentar_esquivar(direction)
-	vida -= dmgDone # Para aplicar el daño sin importar la esquiva
+	vidaActual -= dmgDone # Para aplicar el daño sin importar la esquiva
 	print("recibio daño: ", vida)
+	barraVida.value = vidaActual
 	
-	if vida <= 0:
+	if vidaActual <= 0:
 		print("Lobezno ha muerto!")
 		enemigo_muere.emit()
 		queue_free()

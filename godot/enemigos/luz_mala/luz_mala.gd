@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var vida: int = 80
+@onready var vidaActual = vida
 @export var speed: float = 70
 @export var tiempo_entre_teleport: float = 4.0
 @export var distancia_teleport_min: float = 200
@@ -59,7 +60,7 @@ func _physics_process(delta):
 			timer_teleport -= delta
 			#var t = tiempo_preparacion - timer_teleport
 			#luz.energy = intensidad_base + sin(t * frecuencia) * amplitud
-			get_viewport().get_camera_2d().shake(4.0)
+			#get_viewport().get_camera_2d().shake(4.0)
 			var t = Time.get_ticks_msec() / 1000.0
 			var pulso = sin(t * frecuencia * 3.0) * 0.5 + sin(t * frecuencia) * 0.5
 			luz.energy = luz_energy_original + pulso * amplitud * 1.5
@@ -74,24 +75,19 @@ func _physics_process(delta):
 			luz.scale = luz_scale_original
 			if timer_teleport <= 0:
 				estado = "perseguir"
-				timer_teleport = tiempo_entre_teleport
-	
+				timer_teleport = tiempo_entre_teleport	
 	move_and_slide()
 
 func realizar_teleport():
 	var pos_valida = encontrar_posicion_teleport()
 	
 	if pos_valida != Vector2.ZERO:
-		print("Teleportando de ", global_position, " a ", pos_valida)
-		
+		print("Teleportando de ", global_position, " a ", pos_valida)		
 		# Señal para efectos visuales
-		efecto_teleport.emit(global_position, pos_valida)
-		
-		spawn_rastro_fantasmal(rastro_original_pos)
-		
+		efecto_teleport.emit(global_position, pos_valida)		
+		spawn_rastro_fantasmal(rastro_original_pos)		
 		# Realizar teleport
-		global_position = pos_valida
-		
+		global_position = pos_valida		
 		# Cambiar a recuperación
 		estado = "recuperacion"
 		timer_teleport = tiempo_recuperacion
@@ -133,18 +129,18 @@ func spawn_rastro_fantasmal(pos: Vector2):
 	print("Rastro fantasmal creado en ", pos)
 
 func take_damage(dmgDone):
-	vida -= dmgDone
+	vidaActual -= dmgDone
 	print("Teleportador recibió daño: ", dmgDone, " - Vida: ", vida)
 	
 	# Teleport inmediato al recibir daño
-	if vida <= 0 and estado == "perseguir" and rng.randf() < 0.3:
+	if vidaActual <= 0 and estado == "perseguir" and rng.randf() < 0.3:
 		print("Escape de emergencia!")
 		estado = "preparar_teleport"
 		#timer_teleport = tiempo_preparacion * 0.5 # Más rápido por emergencia
 		#rastro_original_pos = global_position
 		#velocity = Vector2.ZERO
 		
-	if vida <= 0:
+	if vidaActual <= 0:
 		enemigo_muere.emit()
 		queue_free()
 

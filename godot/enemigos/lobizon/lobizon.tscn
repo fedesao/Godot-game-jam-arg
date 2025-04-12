@@ -1,33 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqikuv73psgo0"]
+[gd_scene load_steps=7 format=3 uid="uid://bqikuv73psgo0"]
 
 [ext_resource type="Script" uid="uid://cshkgposckd53" path="res://enemigos/lobizon/lobizon.gd" id="1_hql7e"]
+[ext_resource type="Texture2D" uid="uid://cjvjqwmaahurc" path="res://assets/el_familiar_concept_art.png" id="2_xcm0a"]
+[ext_resource type="Theme" uid="uid://dkyewq7cvwqdd" path="res://barras_vida_theme.tres" id="3_g3s01"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bcai5"]
-size = Vector2(34, 26)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xcm0a"]
+radius = 18.0
+height = 98.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hql7e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8i4bd"]
+bg_color = Color(0.549997, 0.139017, 0.152902, 1)
 
 [node name="Lobizon" type="CharacterBody2D" groups=["enemigos"]]
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_hql7e")
 
-[node name="ColorRect" type="ColorRect" parent="." groups=["enemigos"]]
-offset_left = -15.0
-offset_top = -15.0
-offset_right = 19.0
-offset_bottom = 10.0
-color = Color(1, 0.113725, 1, 1)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, -2)
-shape = SubResource("RectangleShape2D_bcai5")
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_xcm0a")
 
 [node name="Label" type="Label" parent="."]
-offset_left = -25.0
-offset_top = -45.0
-offset_right = 37.0
-offset_bottom = -22.0
+offset_left = -30.0
+offset_top = -71.0
+offset_right = 32.0
+offset_bottom = -48.0
 text = "lobizon"
 
 [node name="ProyectilDetector" type="Area2D" parent="."]
@@ -35,8 +35,24 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProyectilDetector"]
+position = Vector2(-2, 0)
 scale = Vector2(10, 10)
 shape = SubResource("CircleShape2D_hql7e")
+
+[node name="ElFamiliarConceptArt" type="Sprite2D" parent="."]
+position = Vector2(-3, -4)
+scale = Vector2(0.135417, 0.135417)
+texture = ExtResource("2_xcm0a")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -42.0
+offset_top = -44.0
+offset_right = 42.0
+offset_bottom = -37.0
+theme = ExtResource("3_g3s01")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8i4bd")
+value = 50.0
+show_percentage = false
 
 [connection signal="enemigo_muere" from="." to="." method="_on_enemigo_muere"]
 [connection signal="area_entered" from="ProyectilDetector" to="." method="_on_area_detection_area_entered"]

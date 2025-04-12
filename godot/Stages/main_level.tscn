@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhafahdpnw8ah"]
+[gd_scene load_steps=10 format=3 uid="uid://bhafahdpnw8ah"]
 
 [ext_resource type="PackedScene" uid="uid://dsw4i7jsr1ank" path="res://characters/player.tscn" id="1_uia1v"]
 [ext_resource type="PackedScene" uid="uid://8fdqdt6nitfv" path="res://enemigos/enemy_1/enemigo_1.tscn" id="2_c678c"]
 [ext_resource type="Texture2D" uid="uid://cqiri1cddkju4" path="res://light/assets/14622749380557.560858d24a85e.png" id="3_sjey7"]
 [ext_resource type="PackedScene" uid="uid://d32f265ddxdj3" path="res://enemigos/chancho_lata/chancho_lata.tscn" id="4_h02h0"]
+[ext_resource type="PackedScene" uid="uid://bqikuv73psgo0" path="res://enemigos/lobizon/lobizon.tscn" id="5_5pv5t"]
+[ext_resource type="PackedScene" uid="uid://dyuqo18jfehoc" path="res://enemigos/luz_mala/luz_mala.tscn" id="6_qw25s"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_h02h0"]
 polygon = PackedVector2Array(-221, 238, -220, 271, 15, 271, 14, 240)
@@ -69,3 +71,9 @@ position = Vector2(487, 163)
 
 [node name="ChanchoLata" parent="." instance=ExtResource("4_h02h0")]
 position = Vector2(621, 527)
+
+[node name="Lobizon" parent="." instance=ExtResource("5_5pv5t")]
+position = Vector2(1100, 280)
+
+[node name="Enemigo2" parent="." instance=ExtResource("6_qw25s")]
+position = Vector2(363, 750)
