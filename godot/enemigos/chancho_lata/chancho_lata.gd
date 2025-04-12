@@ -17,12 +17,19 @@ var timer = 0.0
 var posicion_inicio_embestida = Vector2.ZERO # Calcula la distancia recorrida
 signal enemigo_muere
 @onready var barraVida = $ProgressBar
+@onready var sprite = $ColorRect
+@onready var col_shape = $CollisionShape2D
 
 func _ready():
 	player = get_node("../Player")
 
 
 func _physics_process(delta):
+	var to_player = global_position.direction_to(player.global_position) # Calcular dirección
+	var angle = to_player.angle() # Calcular ángulo
+	sprite.rotation = angle
+	col_shape.rotation = angle
+	
 	match estado:
 		"perseguir":
 			var direction = global_position.direction_to(player.global_position)
