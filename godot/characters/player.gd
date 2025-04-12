@@ -6,6 +6,7 @@ signal player_muere
 @onready var posicion_escopeta = %markerEscopeta
 @onready var weapon = $weapon
 var impulso = Vector2.ZERO
+@onready var puntaje = $CanvasLayer/puntaje
 #cambio de armas
 @onready var weapon_slot = $WeaponSlots
 var current_weapon: Node = null
@@ -64,6 +65,7 @@ func _physics_process(delta):
 	move_and_slide()
 	impulso = impulso.lerp(Vector2.ZERO, 5 * delta)
 	update_life()
+	puntaje.text = "Enemigos Exorcisados  :  " + str(Global.puntaje)
    # para que rote hacia el mouse
 	look_at(get_global_mouse_position())
 	#SELECCION DE ARMAS##

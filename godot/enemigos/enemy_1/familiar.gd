@@ -25,7 +25,7 @@ func take_damage(dmgDone):
 		queue_free()
 
 func _on_enemigo_muere() -> void:
-	pass # sumar puntos?
+	Global.puntaje += 1
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):

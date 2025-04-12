@@ -9,6 +9,9 @@ extends CharacterBody2D
 @export var tiempo_recuperacion = 1.0
 @export var duracion_maxima_embestida = 2.0
 @export var distancia_maxima_embestida = 400
+@onready var dmgTimer = %DmgTimer
+var player_ref: Node = null
+var dmg = Global.chanchoDmg
 
 var player
 var estado = "perseguir"
@@ -84,4 +87,21 @@ func take_damage(dmgDone):
 
 
 func _on_enemigo_muere() -> void:
-	pass # sumar puntos?
+	Global.puntaje += 1
+
+
+func _on_area_dmg_player_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		player_ref = body
+		dmgTimer.start()
+
+
+func _on_area_dmg_player_body_exited(body: Node2D) -> void:
+		if body == player_ref:
+			dmgTimer.stop()
+			player_ref = null
+
+
+func _on_dmg_timer_timeout() -> void:
+		if player_ref and player_ref.has_method("take_damage_player"):
+			player_ref.take_damage_player(dmg)

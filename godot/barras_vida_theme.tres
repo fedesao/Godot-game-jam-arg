@@ -1,3 +1,7 @@
-[gd_resource type="Theme" format=3 uid="uid://dkyewq7cvwqdd"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dkyewq7cvwqdd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rqs6v"]
+bg_color = Color(0.482353, 0.0313726, 0.0941176, 1)
 
 [resource]
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_rqs6v")

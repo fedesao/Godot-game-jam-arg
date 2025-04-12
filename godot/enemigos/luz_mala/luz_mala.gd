@@ -9,7 +9,10 @@ extends CharacterBody2D
 @export var tiempo_preparacion: float = 0.8
 @export var tiempo_recuperacion: float = 0.5
 @export var max_intentos_teleport: int = 10  # Intentos máximos para encontrar posición válida
-
+@onready var dmgTimer = %DmgTimer
+@onready var barraVida = $ProgressBar
+var dmg = Global.luz_mala_dmg
+var player_ref: Node = null
 var player
 var luz
 var timer_teleport: float
@@ -34,6 +37,8 @@ func _ready():
 	rng.randomize()
 	luz_energy_original = luz.energy
 	luz_scale_original = luz.scale
+	barraVida.max_value = vida
+	barraVida.value = vidaActual
 
 func _physics_process(delta):
 	
@@ -130,20 +135,33 @@ func spawn_rastro_fantasmal(pos: Vector2):
 
 func take_damage(dmgDone):
 	vidaActual -= dmgDone
+	barraVida.value = vidaActual
 	print("Teleportador recibió daño: ", dmgDone, " - Vida: ", vida)
 	
 	# Teleport inmediato al recibir daño
 	if vidaActual <= 0 and estado == "perseguir" and rng.randf() < 0.3:
-		print("Escape de emergencia!")
-		estado = "preparar_teleport"
-		#timer_teleport = tiempo_preparacion * 0.5 # Más rápido por emergencia
-		#rastro_original_pos = global_position
-		#velocity = Vector2.ZERO
-		
+		print("Escape de emergencia!")	
 	if vidaActual <= 0:
 		enemigo_muere.emit()
 		queue_free()
 
 
 func _on_enemigo_muere() -> void:
-	pass # sumar puntos?
+	Global.puntaje += 1
+	
+
+#DAÑO A JUGADOR
+func _on_area_dmg_player_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		player_ref = body
+		dmgTimer.start()
+
+func _on_area_dmg_player_body_exited(body: Node2D) -> void:
+		if body == player_ref:
+			dmgTimer.stop()
+			player_ref = null
+
+func _on_dmg_timer_timeout() -> void:
+	if player_ref and player_ref.has_method("take_damage_player"):
+		player_ref.take_damage_player(dmg)
+		print("daño = "+str(dmg))

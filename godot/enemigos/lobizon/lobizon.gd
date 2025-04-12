@@ -83,4 +83,4 @@ func take_damage(dmgDone):
 		queue_free()
 				
 func _on_enemigo_muere() -> void:
-	pass # sumar puntos?
+	Global.puntaje += 1

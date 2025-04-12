@@ -5,6 +5,7 @@ var playerLife:int = 100
 var playerSpeed:float = 50.0
 var playerDmg:float = 5.0
 var balasDisponibles:int = 6 #a revisar
+var puntaje:int = 0
 
 ### VAR ARMAS
 #pistola
@@ -26,3 +27,5 @@ var enemigo_1_vida:int = 12
 var enemigo_1_speed:float = 60.0
 var enemyDmg:int = 4
 var chancho_lata_vida:int = 30
+var luz_mala_dmg:int = 45
+var chanchoDmg:int = 35
